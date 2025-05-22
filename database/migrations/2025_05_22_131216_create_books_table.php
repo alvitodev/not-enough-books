@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('author');
             $table->string('publisher');
-            $table->int('year');
+            $table->integer('year');
             $table->text('description');
             $table->string('language');
             $table->string('cover_img');
