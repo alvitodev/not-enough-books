@@ -6,4 +6,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//test komen hehe asfbjakdsfbakj
+//test komen hehe -putmul
