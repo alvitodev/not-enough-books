@@ -1,4 +1,4 @@
-@extends('layouts.primary')
+@extends('layouts.admin')
 @section('content')
 <div class="bg-cover bg-center min-h-screen px-8 py-12" style="background-image: url('/images/background-library.jpg')">
   <div class="flex justify-between items-center mb-8 ml-10">
@@ -28,6 +28,7 @@
           <div class="card-actions justify-start mt-1">
             <button class="btn btn-xs btn-neutral text-white">Category</button>
             <button class="btn btn-xs btn-success text-white">read</button>
+            <button class="btn btn-xs btn-warning text-white">edit</button>
             <button class="btn btn-xs btn-error text-white">remove</button>
           </div>
         </div>
