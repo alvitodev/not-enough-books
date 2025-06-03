@@ -20,7 +20,9 @@
             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
           </svg>
           </div>
-          <span class="text-xs text-white font-semibold">Sign in</span>
+          <a href="/login">
+            <span class="text-xs text-white font-semibold">Sign in</span>
+          </a>
         </a>
       </div>
     @else
@@ -32,10 +34,10 @@
               <img src="{{ Auth::user()->profile_picture_url ?? 'default.png' }}" />
             </div>
           </div>
-          <span class="text-xs text-white">Username</span>
+          <span class="text-xs text-white">{{ Auth::user()->username }}</span>
         </a>
         <div class="dropdown dropdown-end">
-             <div tabindex="0" role="button" class="btn btn-ghost btn-xs text-white">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-xs text-white">
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
               <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
             </svg>
@@ -51,11 +53,16 @@
             </li>
             <li>
                 <a>
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
                     <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
                     </svg>  
-                    <span class="text-[10] ml-1">Sign out</span>
+                    <form action="/logout" method="post">
+                      @csrf
+                      <span class="text-[10] ml-1">
+                        <button type="submit" class="" style="font-size: 12px;">Logout</button>
+                      </span>
+                    </form>
                 </a>
             </li>
             </ul>
@@ -111,17 +118,17 @@
       <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
         <figure class="flex-shrink-0 w-1/2">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+            src="{{ $books[$i]->cover_img }}"
             alt="Movie"
             class="w-full h-full object-cover rounded-xl" />
         </figure>
         <div class="card-body px-3 py-0">
 
           <div class="flex flex-col space-y-1">
-          <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
-          <a href="#" class="text-white text-[10px] hover:text-base-300">Author123</a>
-          <a class="text-primary text-[10px]">2 minutes ago</a>
+          <a href="/book/{{ $books[$i]->slug }}" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+            {{ $books[$i]->title }}</a>
+          <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $books[$i]->author }}</a>
+          <a class="text-primary text-[10px]">{{ $books[$i]->created_at->diffForHumans() }}</a>
           </div>
           <div class="card-actions justify-start mb-2">
             <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>

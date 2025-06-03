@@ -17,10 +17,12 @@
             <input id="profilePic" type="file" class="hidden" />
           </div>
         </div>
+        @auth
         <div>
-          <h2 class="text-2xl font-bold text-gray-800">Roland Donald</h2>
+          <h2 class="text-2xl font-bold text-gray-800">{{ auth()->user()->name }}</h2>
           <p class="text-xs text-gray-500">Cashier</p>
         </div>
+        @endauth
       </div>
 
       <!-- Form -->
@@ -98,6 +100,7 @@
 
       </form>
     </div>
+    
   </div>
 </div>
 

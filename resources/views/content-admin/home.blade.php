@@ -69,7 +69,7 @@
       <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
         <figure class="flex-shrink-0 w-1/2">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+            src="{{ $books[i]->image }}"
             alt="Movie"
             class="w-full h-full object-cover rounded-xl" />
         </figure>
@@ -77,7 +77,7 @@
 
           <div class="flex flex-col space-y-1">
           <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
+            {{ $books[i]->title }}</a>
           <a href="#" class="text-white text-[10px] hover:text-base-300">Author123</a>
           <a class="text-primary text-[10px]">2 minutes ago</a>
           </div>

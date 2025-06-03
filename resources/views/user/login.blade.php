@@ -46,7 +46,7 @@
             </div>
 
             <div>
-                <a href="#" class="btn btn-outline w-full text-sm">Create account</a>
+                <a href="/register" class="btn btn-outline w-full text-sm">Create account</a>
             </div>
         </form>
     </div>
