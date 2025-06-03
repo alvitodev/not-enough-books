@@ -112,28 +112,25 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
     <!-- Cover Image -->
     <figure class="mx-auto">
-      <img src="your-image-path.png" alt="Book Cover" class="w-32 rounded-xl shadow-md" />
+      <img src="{{ $book->cover_img }}" alt="Book Cover" class="w-32 rounded-xl shadow-md" />
     </figure>
 
     <!-- Book Info -->
     <div class="md:col-span-2 space-y-3 text-white text-[15px] leading-relaxed">
       <h2 class="text-xl font-semibold">
-        Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones
+        {{ $book->title }}
       </h2>
-      <p class="opacity-80">Author: <span class="font-medium">James Clear</span></p>
+      <p class="opacity-80">Author: <span class="font-medium">{{ $book->author }}</span></p>
       <p class="opacity-90">
-        Tiny Changes, Remarkable Results. No matter your goals, Atomic Habits offers a proven framework
-        for improving every day. James Clear, one of the world’s leading experts on habit formation,
-        reveals practical strategies to form good habits, break bad ones, and master the small behaviors
-        that lead to remarkable results.
+        {{$book->description}}
       </p>
 
       <!-- Metadata -->
       <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
-        <p><span class="font-semibold">Categories:</span> Psychology</p>
-        <p><span class="font-semibold">Publisher:</span> Penguin Publishing Group</p>
-        <p><span class="font-semibold">Publish Year:</span> 2018</p>
-        <p><span class="font-semibold">Language:</span> English</p>
+        <p><span class="font-semibold">Categories:</span> {{ $book->category->title }}</p>
+        <p><span class="font-semibold">Publisher:</span> {{ $book->publisher }}</p>
+        <p><span class="font-semibold">Publish Year:</span> {{ $book->year }}</p>
+        <p><span class="font-semibold">Language:</span> {{ $book->language }}</p>
         <p><span class="font-semibold">Content Type:</span> Book</p>
       </div>
 
@@ -141,7 +138,9 @@
       <div class="flex flex-wrap gap-3 pt-3">
         <button class="btn btn-sm btn-primary text-white">Read Online</button>
         <button class="btn btn-sm btn-warning text-white">Add to Library</button>
-        <button class="btn btn-sm btn-secondary">Download</button>
+        <a href="/book_files/{{ $book->file_link }}">
+          <button class="btn btn-sm btn-secondary">Download</button>
+        </a>
       </div>
     </div>
   </div>
@@ -155,16 +154,7 @@
 <!-- Content end-->  
 
 </div>
- <div class="fixed bottom-8 left-[56%] -translate-x-1/2 z-50">
-  <div class="join shadow-lg rounded-xl bg-white/80 backdrop-blur-md px-4 py-2 space-x-1">
-    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="prev" checked />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="1" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="2" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="3" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="4" />
-    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="next" />
-  </div>
-</div>
+
 
 
 </div>

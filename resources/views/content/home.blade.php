@@ -118,17 +118,17 @@
       <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
         <figure class="flex-shrink-0 w-1/2">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+            src="{{ $books[$i]->cover_img }}"
             alt="Movie"
             class="w-full h-full object-cover rounded-xl" />
         </figure>
         <div class="card-body px-3 py-0">
 
           <div class="flex flex-col space-y-1">
-          <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
-          <a href="#" class="text-white text-[10px] hover:text-base-300">Author123</a>
-          <a class="text-primary text-[10px]">2 minutes ago</a>
+          <a href="/book/{{ $books[$i]->slug }}" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+            {{ $books[$i]->title }}</a>
+          <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $books[$i]->author }}</a>
+          <a class="text-primary text-[10px]">{{ $books[$i]->created_at->diffForHumans() }}</a>
           </div>
           <div class="card-actions justify-start mb-2">
             <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>

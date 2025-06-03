@@ -29,12 +29,10 @@ class BookController extends Controller
     }
 
     public function show(Book $book) {
-
-
-        return view('book', [
-            "title" => "Single Book", 
-            "keyt" => "Artikel",
-            "books" => $book
+        
+        return view('content.book', [
+            "title" => "Single Book",
+            "book" => $book
         ]);
 
     }

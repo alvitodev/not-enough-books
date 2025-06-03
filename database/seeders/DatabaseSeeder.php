@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
 
         Book::create(['title' => 'Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones', 'slug' => 'atomic-habits-an-easy-proven-way-to-build-good-habits-break-bad-ones', 'author' => 'James Clear', 'publisher' => 'Penguin Publishing Group', 'year' => '2018', 'description' => 'Tiny Changes, Remarkable Results<br>No matter your goals, Atomic Habits offers a proven framework for improving--every day. James Clear, one of the world`s leading experts on habit formation, reveals practical strategies that will teach you exactly how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results.<br>If you`re having trouble changing your habits, the problem isn`t you. The problem is your system. Bad habits repeat themselves again and again not because you don`t want to change, but because you have the wrong system for change. You do not rise to the level of your goals. You fall to the level of your systems. Here, you`ll get a proven system that can take you to new heights.<br>Clear is known for his ability to distill complex topics into simple behaviors that can be easily applied to daily life and work. Here, he draws on the most proven ideas from biology, psychology, and neuroscience to create an easy-to-understand guide for making good habits inevitable and bad habits impossible. Along the way, readers will be inspired and entertained with true stories from Olympic gold medalists, award-winning artists, business leaders, life-saving physicians, and star comedians who have used the science of small habits to master their craft and vault to the top of their field.<br>Learn how to:<br>    make time for new habits (even when life gets crazy);<br>    overcome a lack of motivation and willpower;<br>    design your environment to make success easier;<br>    get back on track when you fall off course;<br>...and much more.<br>Atomic Habits will reshape the way you think about progress and success, and give you the tools and strategies you need to transform your habits--whether you are a team looking to win a championship, an organization hoping to redefine an industry, or simply an individual who wishes to quit smoking, lose weight, reduce stress, or achieve any other goal.', 'category_id' => '1', 'language' => 'English', 'cover_img' => 'https://s3proxy.cdn-zlib.sk/covers400/collections/userbooks/e5fb224a04022e54b7eaf19cb1221deabb53056093a0c3b9366d583b5ac42538.jpg', 'file_link' => 'atomic-habits-an-easy-proven-way-to-build-good-habits-break-bad-ones.pdf']);
         Book::create(['title' => 'The Art of War', 'slug' => 'the-art-of-war', 'author' => 'Sun Tzu', 'publisher' => 'Shambala Publication', 'year' => '2011', 'description' => 'Twenty-Five Hundred years ago, Sun Tzu wrote this classic book of military strategy based on Chinese warfare and military thought. Since that time, all levels of military have used the teaching on Sun Tzu to warfare, and civilization have adapted these teachings for use in politics, business and everyday life. The Art of War is a book which should be used to gain advantage of opponents in the boardroom and battlefield alike.', 'category_id' => '2', 'language' => 'English', 'cover_img' => 'https://s3proxy.cdn-zlib.sk/covers300/collections/foreignfiction/15671ef4f068f96ece8de0c34027445a8ea1143d44eb5f0f39911c663a9fe511.jpg', 'file_link' => 'the-art-of-war.pdf']);
@@ -66,21 +66,22 @@ class DatabaseSeeder extends Seeder
         Book::create(['title' => 'Rich Dad Poor Dad', 'slug' => 'rich-dad-poor-dad', 'author' => 'Robert T. Kiyosaki', 'publisher' => 'Plata Publishing', 'year' => '2017', 'description' => 'April 2017 marks 20 years since Robert Kiyosaki`s Rich Dad Poor Dad first made waves in the Personal Finance arena. It has since become the #1 Personal Finance book of all time... translated into dozens of languages and sold around the world. Rich Dad Poor Dad is Robert`s story of growing up with two dads -- his real father and the father of his best friend, his rich dad -- and the ways in which both men shaped his thoughts about money and investing. The book explodes the myth that you need to earn a high income to be rich and explains the difference between working for money and having your money work for you. 20 Years... 20/20 Hindsight In the 20th Anniversary Edition of this classic, Robert offers an update on what we`ve seen over the past 20 years related to money, investing, and the global economy. Sidebars throughout the book will take readers "fast forward" -- from 1997 to today -- as Robert assesses how the principles taught by his rich dad have stood the test of time. In many ways, the messages of Rich Dad Poor Dad, messages that were criticized and challenged two decades ago, are more meaningful, relevant and important today than they were 20 years ago. As always, readers can expect that Robert will be candid, insightful... and continue to rock more than a few boats in his retrospective. Will there be a few surprises? Count on it.<br>Rich Dad Poor Dad... * Explodes the myth that you need to earn a high income to become rich * Challenges the belief that your house is an asset * Shows parents why they can`t rely on the school system to teach their kids about money * Defines once and for all an asset and a liability * Teaches you what to teach your kids about money for their future financial success', 'category_id' => '6', 'language' => 'English', 'cover_img' => 'https://s3proxy.cdn-zlib.sk/covers300/collections/genesis/1156ee47d6d2f07ed70ee2f53c8711f99e1d5c629fb324c3d82f3725c7a8ea95.jpg', 'file_link' => 'rich-dad-poor-dad.pdf']);
 
 
-        Category::create(['title' => 'Psychology', 'slug' => 'psychology', 'cover_img' => 'psychology.jpg']);
-        Category::create(['title' => 'History', 'slug' => 'history', 'cover_img' => 'history.jpg']);
-        Category::create(['title' => 'Literature', 'slug' => 'literature', 'cover_img' => 'literature.jpg']);
-        Category::create(['title' => 'Biography', 'slug' => 'biography', 'cover_img' => 'biography.jpg']);
-        Category::create(['title' => 'Technology', 'slug' => 'technology', 'cover_img' => 'technology.jpg']);
-        Category::create(['title' => 'Bussiness', 'slug' => 'bussiness', 'cover_img' => 'bussiness.jpg']);
-        Category::create(['title' => 'Philosophy', 'slug' => 'philosophy', 'cover_img' => 'philosophy.jpg']);
-        Category::create(['title' => 'Productivity', 'slug' => 'productivity', 'cover_img' => 'productivity.jpg']);
-        Category::create(['title' => 'Finance', 'slug' => 'finance', 'cover_img' => 'finance.jpg']);
-        Category::create(['title' => 'Science', 'slug' => 'science', 'cover_img' => 'science.jpg']);
-        Category::create(['title' => 'Romance', 'slug' => 'romance', 'cover_img' => 'romance.jpg']);
-        Category::create(['title' => 'Lifestyle', 'slug' => 'lifestyle', 'cover_img' => 'lifestyle.jpg']);
-        Category::create(['title' => 'Mystery', 'slug' => 'mystery', 'cover_img' => 'mystery.jpg']);
-        Category::create(['title' => 'Fiction', 'slug' => 'fiction', 'cover_img' => 'fiction.jpg']);
-        Category::create(['title' => 'Magazine', 'slug' => 'magazine', 'cover_img' => 'magazine.jpg']);
+        Category::create(['title' => 'Psychology', 'slug' => 'psychology', 'cover_img' => 'psychology.jpg', 'description' => 'Psychology']);
+        Category::create(['title' => 'History', 'slug' => 'history', 'cover_img' => 'history.jpg', 'description' => 'History']);
+        Category::create(['title' => 'Literature', 'slug' => 'literature', 'cover_img' => 'literature.jpg', 'description' => 'Literature']);
+        Category::create(['title' => 'Biography', 'slug' => 'biography', 'cover_img' => 'biography.jpg', 'description' => 'Biography']);
+        Category::create(['title' => 'Technology', 'slug' => 'technology', 'cover_img' => 'technology.jpg', 'description' => 'Technology']);
+        Category::create(['title' => 'Bussiness', 'slug' => 'bussiness', 'cover_img' => 'bussiness.jpg', 'description' => 'Bussiness']);
+        Category::create(['title' => 'Philosophy', 'slug' => 'philosophy', 'cover_img' => 'philosophy.jpg', 'description' => 'Philosophy']);
+        Category::create(['title' => 'Productivity', 'slug' => 'productivity', 'cover_img' => 'productivity.jpg', 'description' => 'Productivity']);
+        Category::create(['title' => 'Finance', 'slug' => 'finance', 'cover_img' => 'finance.jpg', 'description' => 'Finance']);
+        Category::create(['title' => 'Science', 'slug' => 'science', 'cover_img' => 'science.jpg', 'description' => 'Science']);
+        Category::create(['title' => 'Romance', 'slug' => 'romance', 'cover_img' => 'romance.jpg', 'description' => 'Romance']);
+        Category::create(['title' => 'Lifestyle', 'slug' => 'lifestyle', 'cover_img' => 'lifestyle.jpg', 'description' => 'Lifestyle']);
+        Category::create(['title' => 'Mystery', 'slug' => 'mystery', 'cover_img' => 'mystery.jpg', 'description' => 'Mystery']);
+        Category::create(['title' => 'Fiction', 'slug' => 'fiction', 'cover_img' => 'fiction.jpg', 'description' => 'Fiction']);
+        Category::create(['title' => 'Magazine', 'slug' => 'magazine', 'cover_img' => 'magazine.jpg', 'description' => 'Magazine']);
+
 
     }
 }

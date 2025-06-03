@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Book;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
@@ -13,7 +15,9 @@ Route::get('/', function () {
 
 //home page
 Route::get('/home', function () {
-    return view('content.home');
+    return view('content.home',[
+        'books' => Book::latest()->get()
+    ]);
 });
 
 //home page
@@ -64,9 +68,7 @@ Route::get('/add-book', function () {
     return view('content-admin.add-book');
 });
 
-Route::get('/book', function () {
-    return view('content.book');
-});
+Route::get('/book/{book:slug}', [BookController::class, 'show']);
 
 
 

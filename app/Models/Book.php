@@ -14,7 +14,7 @@ class Book extends Model
 
 
     protected $guarded = ['id'];
-    protected $with = ['category', 'author'];
+    protected $with = ['category'];
 
     public function scopeFilter($query, array $filters) {
         if(isset($filters['search']) ? $filters['search'] : false) {

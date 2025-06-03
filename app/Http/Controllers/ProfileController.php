@@ -12,4 +12,6 @@ class ProfileController extends Controller
             'keyt' => 'profile'
         ]);
     }
+
+    
 }
