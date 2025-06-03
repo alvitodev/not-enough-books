@@ -68,54 +68,51 @@
 
 <!-- Search Bar -->
 <div class="flex justify-center items-center mb-8 ml-10">
-  <div class="flex w-[520px] bg-white rounded-full shadow-md overflow-hidden">
-    
-    <!-- Category Dropdown -->
-    <select class="select bg-white text-neutral border-none w-40 rounded-l-full focus:outline-none focus:ring-0">
-      <option selected>All Category</option>
-      <option>Science</option>
-      <option>Fiction</option>
-      <option>History</option>
-    </select>
+  <form action="{{ route('search-books-admin') }}" method="GET" class="flex w-[520px] bg-white rounded-full shadow-md overflow-hidden">
 
     <!-- Search Input -->
-    <input type="text" placeholder="Find The Books You Like..." class="input bg-white text-neutral border-none flex-1 focus:outline-none focus:ring-0 placeholder-base-300" />
+    <input type="text" name="query" placeholder="Find The Books You Like..." class="input bg-white text-neutral border-none flex-1 focus:outline-none focus:ring-0 placeholder-base-300" />
 
     <!-- Search Button -->
-    <button class="bg-primary text-white text-sm font-semibold rounded-full px-4 h-8 m-1 hover:bg-green-800 transition duration-300 ease-in-out">
+    <button type="submit" class="bg-primary text-white text-sm font-semibold rounded-full px-4 h-8 m-1 hover:bg-green-800 transition duration-300 ease-in-out">
       Search
     </button>
-  </div>
+  </form>
 </div>
 
 <!-- Latest Updates -->
 <div class="mb-10 w-full max-w-none">
   <div class="flex justify-between items-center mb-5 ">
-      <a href="#" class="text-2xl text-white font-semibold px-8 block">Latest Updates</a>
+      <a href="{{ route('latest-admin') }}"class="text-2xl text-white font-semibold px-8 block">Latest Updates</a>
     </div>
   <div class="flex flex-wrap gap-6 justify-start w-full">
-    @for ($i = 0; $i < 4; $i++)
+    @foreach ($latestBooksA as $book)
       <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
         <figure class="flex-shrink-0 w-1/2">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+            src="{{ $book->cover_img ?? '/images/default-cover.jpg' }}" alt="Cover" class="w-full h-full object-cover rounded-xl"
             alt="Movie"
             class="w-full h-full object-cover rounded-xl" />
         </figure>
         <div class="card-body px-3 py-0">
 
           <div class="flex flex-col space-y-1">
-          <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
-          <a href="#" class="text-white text-[10px] hover:text-base-300">Author123</a>
-          <a class="text-primary text-[10px]">2 minutes ago</a>
+          <a href="{{ route('books.show-admin', $book->id) }}"  class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+          {{ $book->title }}</a>
+          <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
+          <a class="text-primary text-[10px]">{{ $book->year }}</a>
           </div>
           <div class="card-actions justify-start mb-2">
-            <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>
+            <a href="{{ route('books.show-admin', $book->id) }}"  class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
+            <form action="{{ route('books.destroy', $book->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-xs btn-error text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">Delete</button>
+            </form>
           </div>
         </div>
       </div>
-    @endfor
+    @endforeach
   </div>
 </div>
 </div>
@@ -123,31 +120,36 @@
   <!-- Recently Addes -->
 <div class="mb-10 w-full max-w-none">
   <div class="flex justify-between items-center mb-5 ">
-      <a href="#" class="text-2xl text-white font-semibold px-8 block">Recently Addes</a>
+      <a href="{{ route('recently-admin') }}" class="text-2xl text-white font-semibold px-8 block">Recently Added</a>
     </div>
   <div class="flex flex-wrap gap-6 justify-start w-full">
-    @for ($i = 0; $i < 4; $i++)
+    @foreach ($recentBooksA as $book)
       <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
         <figure class="flex-shrink-0 w-1/2">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+            src="{{ $book->cover_img }} ?? {{ asset ('public/images/default-cover.jpg') }}"
             alt="Movie"
             class="w-full h-full object-cover rounded-xl" />
         </figure>
         <div class="card-body px-3 py-0">
 
           <div class="flex flex-col space-y-1">
-          <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
-          <a href="#" class="text-white text-[10px] hover:text-base-300">Author123</a>
-          <a class="text-primary text-[10px]">2 minutes ago</a>
+          <a href="{{ route('books.show-admin', $book->id) }}"  class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+          {{ $book->title }}</a>
+          <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
+          <a class="text-primary text-[10px]">{{ $book->year }}</a>
           </div>
           <div class="card-actions justify-start mb-2">
-            <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>
+            <a href="{{ route('books.show-admin', $book->id) }}"  class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
+            <form action="{{ route('books.destroy', $book->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-xs btn-error text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">Delete</button>
+            </form>
           </div>
         </div>
       </div>
-    @endfor
+    @endforeach
   </div>
 </div>
 
@@ -172,15 +174,6 @@
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
           </svg>
           Add Book
-        </a>
-        </li>
-        <li>
-        <a href="{{ route('edit-book') }}" class="w-full bg-green-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-            <path d="M15.502 1.94a.5.5 0 0 1 0 .706l-1 1a.5.5 0 0 1-.708 0L13 3.207l1-1a.5.5 0 0 1 .708 0l.794.733zm-1.75 2.456l-1-1L5 11.146V12h.854l8.898-8.898z"/>
-            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-7a.5.5 0 0 0-1 0v7a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-            </svg>
-            Edit Book
         </a>
         </li>
       <li class="pointer-events-none hover:bg-transparent">

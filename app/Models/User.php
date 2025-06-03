@@ -6,9 +6,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Book;
 
 class User extends Authenticatable
 {
+    public function library()
+    {
+        return $this->hasMany(Library::class);
+    }
+    
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -18,7 +24,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'name', 
         'username',
         'email',
         'password',
@@ -47,4 +53,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+
 }

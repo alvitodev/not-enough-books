@@ -7,7 +7,6 @@
 
         <form method="POST" action="{{ route('books.store') }}" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
 
             <!-- Title -->
             <div class="form-control mb-2">
@@ -19,6 +18,12 @@
             <div class="form-control mb-2">
                 <label for="author" class="mb-1 block text-xs font-medium">Author</label>
                 <input type="text" id="author" name="author" class="input input-bordered w-full text-xs placeholder-gray-400 py-1 px-2" placeholder="Enter author name" value="" required />
+            </div>
+
+            <!-- publisher -->
+            <div class="form-control mb-2">
+                <label for="publisher" class="mb-1 block text-xs font-medium">Publisher</label>
+                <input type="text" id="publisher" name="publisher" class="input input-bordered w-full text-xs placeholder-gray-400 py-1 px-2" placeholder="Enter publisher name" value="" required />
             </div>
 
             <!-- Category & Year -->
@@ -42,7 +47,7 @@
             <!-- Upload Cover -->
             <div class="form-control mb-4">
                 <label for="cover" class="mb-1 block text-xs font-medium">Book Cover</label>
-                <input type="file" id="cover" name="cover" class="file-input file-input-xs file-input-bordered file-input-secondary w-full max-w-sm" accept="image/*" />
+                <input type="file" id="cover_img" name="cover_img" class="file-input file-input-xs file-input-bordered file-input-secondary w-full max-w-sm" accept="image/*" />
             </div>
 
             <!-- Save Button -->
@@ -50,7 +55,6 @@
                 <button type="submit" class="btn btn-primary hover:bg-green-500 text-white text-sm w-full py-1.5">Add book</button>
             </div>
         </form>
-
     </div>
 </div>
 @endsection

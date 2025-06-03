@@ -32,7 +32,7 @@
               <img src="{{ Auth::user()->profile_picture_url ?? 'default.png' }}" />
             </div>
           </div>
-          <span class="text-xs text-white">{{ Auth::user()->username ?? Auth::user()->name }}</span>
+          <span class="text-xs text-white">{{ Auth::user()->username ?? Auth::user()->name }}</span> 
         </a>
         <div class="dropdown dropdown-end">
              <div tabindex="0" role="button" class="btn btn-ghost btn-xs text-white">
@@ -83,30 +83,22 @@
 
 <!-- Search Bar -->
 <div class="flex justify-center items-center mb-8 ml-10">
-  <div class="flex w-[520px] bg-white rounded-full shadow-md overflow-hidden">
-    
-    <!-- Category Dropdown -->
-    <select class="select bg-white text-neutral border-none w-40 rounded-l-full focus:outline-none focus:ring-0">
-      <option selected>All Category</option>
-      <option>Science</option>
-      <option>Fiction</option>
-      <option>History</option>
-    </select>
+  <form action="{{ route('search-books') }}" method="GET" class="flex w-[520px] bg-white rounded-full shadow-md overflow-hidden">
 
     <!-- Search Input -->
-    <input type="text" placeholder="Find The Books You Like..." class="input bg-white text-neutral border-none flex-1 focus:outline-none focus:ring-0 placeholder-base-300" />
+    <input type="text" name="queryU" placeholder="Find The Books You Like..." class="input bg-white text-neutral border-none flex-1 focus:outline-none focus:ring-0 placeholder-base-300" />
 
     <!-- Search Button -->
-    <button class="bg-primary text-white text-sm font-semibold rounded-full px-4 h-8 m-1 hover:bg-green-800 transition duration-300 ease-in-out">
+    <button type="submit" class="bg-primary text-white text-sm font-semibold rounded-full px-4 h-8 m-1 hover:bg-green-800 transition duration-300 ease-in-out">
       Search
     </button>
-  </div>
+  </form>
 </div>
 
 <!-- Latest Updates -->
 <div class="mb-10 w-full max-w-none">
   <div class="flex justify-between items-center mb-5 ">
-      <a href="#" class="text-2xl text-white font-semibold px-8 block">Latest Updates</a>
+      <a href="{{ route('latest') }}" class="text-2xl text-white font-semibold px-8 block">Latest Updates</a>
     </div>
     <div class="flex flex-wrap gap-6 justify-start w-full">
       @foreach ($latestBooks as $book)
@@ -123,7 +115,7 @@
               <a class="text-primary text-[10px]">{{ $book->year }}</a>
             </div>
             <div class="card-actions justify-start mb-2">
-              <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>
+              <a href="{{ route('books.show', $book->id) }}" class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
             </div>
           </div>
         </div>
@@ -132,10 +124,10 @@
   </div>
 </div>
 
-  <!-- Recently Addes -->
+  <!-- Recently Added -->
 <div class="mb-10 w-full max-w-none">
   <div class="flex justify-between items-center mb-5 ">
-      <a href="#" class="text-2xl text-white font-semibold px-8 block">Recently Added</a>
+      <a href="{{ route('recently') }}" class="text-2xl text-white font-semibold px-8 block">Recently Added</a>
     </div>
     <div class="flex flex-wrap gap-6 justify-start w-full">
     @foreach ($recentBooks as $book)
@@ -152,7 +144,7 @@
             <a class="text-primary text-[10px]">{{ $book->year }}</a>
           </div>
           <div class="card-actions justify-start mb-2">
-            <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>
+            <a href="{{ route('books.show', $book->id) }}" class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
           </div>
         </div>
       </div>
@@ -201,10 +193,8 @@
             </summary>
             <ul class="ml-6 mt-1 space-y-1 text-sm text-gray-600">
               <li><a href="{{ route('latest') }}" class="text-black">Latest Updates</a></li>
-              <li><a href="{{ route('recently') }}" class="text-black">Recently Addes</a></li>
-              @auth
+              <li><a href="{{ route('recently') }}" class="text-black">Recently Added</a></li>
               <li><a href="{{ route('libraries') }}" class="text-black">Libraries</a></li>
-              @endauth
               <li><a href="{{ route('category') }}" class="text-black">Category</a></li>
             </ul>
           </details>

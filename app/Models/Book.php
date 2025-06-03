@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Books extends Model
+class Book extends Model
 {
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
@@ -13,9 +13,16 @@ class Books extends Model
     protected $fillable = [
         'title',
         'author',
-        'category',
+        'publisher',
         'year',
         'description',
-        'cover',
+        'cover_img',
+        'category',
     ];
+
+    public function library_books()
+    {
+        return $this->hasMany(Library::class);
+    }
+
 }
