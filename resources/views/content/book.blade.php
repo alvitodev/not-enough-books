@@ -4,8 +4,6 @@
         @vite('resources/css/app.css')
     </head>
     <body>
-
-
 <!-- NAVBAR START -->
         <div class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent shadow-none">
             <div class="navbar-start"></div>
@@ -138,9 +136,7 @@
       <div class="flex flex-wrap gap-3 pt-3">
         <button class="btn btn-sm btn-primary text-white">Read Online</button>
         <button class="btn btn-sm btn-warning text-white">Add to Library</button>
-        <a href="/book_files/{{ $book->file_link }}">
-          <button class="btn btn-sm btn-secondary">Download</button>
-        </a>
+        <button class="btn btn-sm btn-secondary">Download</button>
       </div>
     </div>
   </div>
@@ -154,9 +150,19 @@
 <!-- Content end-->  
 
 </div>
+ <div class="fixed bottom-8 left-[56%] -translate-x-1/2 z-50">
+  <div class="join shadow-lg rounded-xl bg-white/80 backdrop-blur-md px-4 py-2 space-x-1">
+    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="prev" checked />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="1" />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="2" />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="3" />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="4" />
+    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="next" />
+  </div>
+</div>
 
 
-
+</div>
 </div>
 </div>
   <div class="drawer-side">

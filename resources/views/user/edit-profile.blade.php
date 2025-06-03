@@ -26,25 +26,26 @@
       </div>
 
       <!-- Form -->
-      <form action="#" method="POST" class="space-y-5 text-xs">
+      <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-5 text-xs">
         @csrf
+        @method('PUT') <!-- for RESTful update -->
 
         <!-- Name & Username -->
         <div class="grid grid-cols-2 gap-6">
           <div>
             <label class="block font-medium text-gray-600">First Name</label>
-            <input type="text" name="first_name" value="Roland" placeholder="First Name" class="input input-bordered w-full text-xs" />
+            <input type="text" name="name" value="{{ old('name', $user->name) }}" placeholder="First Name" class="input input-bordered w-full text-xs" />
           </div>
           <div>
             <label class="block font-medium text-gray-600">Username</label>
-            <input type="text" name="username" value="roland_d" placeholder="Username" class="input input-bordered w-full text-xs" />
+            <input type="text" name="username" value="{{ old('username', $user->username) }}" placeholder="Username" class="input input-bordered w-full text-xs" />
           </div>
         </div>
 
         <!-- Email -->
         <div>
           <label class="block font-medium text-gray-600">Email</label>
-          <input type="email" name="email" value="rolandDonald@gmail.com" placeholder="you@example.com" class="input input-bordered w-full text-xs" />
+          <input type="email" name="email" value="{{ old('email', $user->email) }}" placeholder="you@example.com" class="input input-bordered w-full text-xs" />
         </div>
 
         <!-- Password + Icon mata -->
@@ -68,11 +69,11 @@
         <div class="grid grid-cols-2 gap-6">
           <div>
             <label class="block font-medium text-gray-600">Phone</label>
-            <input type="text" name="phone" value="(405) 555-0128" placeholder="Phone Number" class="input input-bordered w-full text-xs" />
+            <input type="text" name="phone" placeholder="Phone Number" class="input input-bordered w-full text-xs" />
           </div>
           <div>
             <label class="block font-medium text-gray-600">Date of Birth</label>
-            <input type="date" name="dob" value="1995-02-01" class="input input-bordered w-full text-xs" />
+            <input type="date" name="dob" class="input input-bordered w-full text-xs" />
           </div>
         </div>
 
@@ -88,16 +89,15 @@
           </div>
           <div>
             <label class="block font-medium text-gray-600">Postal Code</label>
-            <input type="text" name="postal_code" value="30301" placeholder="Postal Code" class="input input-bordered w-full text-xs" />
+            <input type="text" name="postal_code" placeholder="Postal Code" class="input input-bordered w-full text-xs" />
           </div>
         </div>
 
         <!-- Buttons -->
         <div class="flex justify-end space-x-4 mt-6">
-          <button type="reset" class="btn btn-outline text-xs">Cancel</button>
+          <a href="{{ route('profile') }}" class="btn btn-outline text-xs">Cancel</a>
           <button type="submit" class="btn bg-emerald-500 text-white hover:bg-emerald-600 text-xs">Save</button>
         </div>
-
       </form>
     </div>
     

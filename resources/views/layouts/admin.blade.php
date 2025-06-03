@@ -75,32 +75,34 @@
        <li>
          <div>
           <div class="avatar w-32 h-17">
-            <img src="/images/logo-sb.png" alt="Profile" class="w-full h-full" />
+            <a href="{{ route('home-admin') }}">
+              <img src="/images/logo-sb.png" alt="Profile" class="w-full h-full" />
+            </a>
           </div>
         </div>
       </li>
       <li>
-        <button class="w-full bg-gray-200 hover:bg-gray-300 text-black font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 mb-2">
+        <a href="{{ route('add-book') }}" class="w-full bg-gray-200 hover:bg-gray-300 text-black font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 mb-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
             </svg>
-            Add Book
-        </button>
+          Add Book
+        </a>
         </li>
         <li>
-        <button class="w-full bg-green-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 mb-4">
+        <a href="{{ route('edit-book') }}" class="w-full bg-green-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706l-1 1a.5.5 0 0 1-.708 0L13 3.207l1-1a.5.5 0 0 1 .708 0l.794.733zm-1.75 2.456l-1-1L5 11.146V12h.854l8.898-8.898z"/>
             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-7a.5.5 0 0 0-1 0v7a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
             </svg>
             Edit Book
-        </button>
+        </a>
         </li>
       <li class="pointer-events-none hover:bg-transparent">
         <span class="text-sm text-black font-semibold">MENU</span>
       </li>
         <li>
-          <a class="flex items-center  gap-3 px-3 py-2 rounded-md hover:bg-gray-100">
+          <a href="{{ route('home-admin') }}" class="flex items-center  gap-3 px-3 py-2 rounded-md hover:bg-gray-100">
           <div class="badge badge-primary rounded-md px-1 py-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
               <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
@@ -121,10 +123,10 @@
               <span class="text-sm text-black">Library</span>
             </summary>
             <ul class="ml-6 mt-1 space-y-1 text-xs text-gray-600">
-              <li><a class="text-black">Latest Updates</a></li>
-              <li><a class="text-black">Recently Addes</a></li>
-              <li><a class="text-black">Libraries</a></li>
-              <li><a class="text-black">Category</a></li>
+              <li><a href="{{ route('latest') }}" class="text-black">Latest Updates</a></li>
+              <li><a href="{{ route('recently') }}" class="text-black">Recently Addes</a></li>
+              <li><a href="{{ route('libraries') }}" class="text-black">Libraries</a></li>
+              <li><a href="{{ route('category') }}" class="text-black">Category</a></li>
             </ul>
           </details>
         </li>

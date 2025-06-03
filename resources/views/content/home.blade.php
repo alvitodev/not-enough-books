@@ -13,7 +13,7 @@
     @guest
       {{-- Navbar untuk Guest --}}
       <div class="flex items-center">
-        <a class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
+        <a href="{{ route('login') }}" class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
           <div class="avatar">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -28,7 +28,7 @@
     @else
       {{-- Navbar untuk User --}}
       <div class="flex items-center">
-        <a class="btn btn-ghost btn-xs text-x2 flex items-center gap-2 cursor-default">
+        <a href="{{ route('profile') }}" class="btn btn-ghost btn-xs text-x2 flex items-center gap-2 cursor-default">
           <div class="avatar">
             <div class="ring-white ring-offset-base-100 w-5 rounded-full ring-1 ring-offset-1">
               <img src="{{ Auth::user()->profile_picture_url ?? 'default.png' }}" />
@@ -44,7 +44,7 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu menu-sm bg-base-100 rounded-box mt-3 w-35 p-2 shadow z-[1]">
             <li>
-                <a>
+                <a href="{{ route('profile') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                     </svg>   
@@ -57,12 +57,7 @@
                     <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
                     <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
                     </svg>  
-                    <form action="/logout" method="post">
-                      @csrf
-                      <span class="text-[10] ml-1">
-                        <button type="submit" class="" style="font-size: 12px;">Logout</button>
-                      </span>
-                    </form>
+                    <span class="text-[10] ml-1">Sign out</span>
                 </a>
             </li>
             </ul>
@@ -73,7 +68,6 @@
   </div>
 </div>
 <!-- Navbar End -->
-
 
 <!-- Sidebar Start -->
 <div class="drawer lg:drawer-open bg-white">
@@ -143,31 +137,28 @@
   <!-- Recently Addes -->
 <div class="mb-10 w-full max-w-none">
   <div class="flex justify-between items-center mb-5 ">
-      <a href="#" class="text-2xl text-white font-semibold px-8 block">Recently Addes</a>
+      <a href="#" class="text-2xl text-white font-semibold px-8 block">Recently Added</a>
     </div>
-  <div class="flex flex-wrap gap-6 justify-start w-full">
-    @for ($i = 0; $i < 4; $i++)
+    <div class="flex flex-wrap gap-6 justify-start w-full">
+    @foreach ($recentBooks as $book)
       <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
         <figure class="flex-shrink-0 w-1/2">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-            alt="Movie"
-            class="w-full h-full object-cover rounded-xl" />
+          <img src="{{ $book->cover_img ?? '/images/default-cover.jpg' }}" alt="Cover" class="w-full h-full object-cover rounded-xl" />
         </figure>
         <div class="card-body px-3 py-0">
-
           <div class="flex flex-col space-y-1">
-          <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
-          <a href="#" class="text-white text-[10px] hover:text-base-300">Author123</a>
-          <a class="text-primary text-[10px]">2 minutes ago</a>
+            <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+              {{ $book->title }}
+            </a>
+            <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
+            <a class="text-primary text-[10px]">{{ $book->year }}</a>
           </div>
           <div class="card-actions justify-start mb-2">
             <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>
           </div>
         </div>
       </div>
-    @endfor
+    @endforeach
   </div>
 </div>
 
@@ -211,10 +202,12 @@
               <span class="text-[1] text-black">Library</span>
             </summary>
             <ul class="ml-6 mt-1 space-y-1 text-sm text-gray-600">
-              <li><a class="text-black">Latest Updates</a></li>
-              <li><a class="text-black">Recently Addes</a></li>
-              <li><a class="text-black">Libraries</a></li>
-              <li><a class="text-black">Category</a></li>
+              <li><a href="{{ route('latest') }}" class="text-black">Latest Updates</a></li>
+              <li><a href="{{ route('recently') }}" class="text-black">Recently Addes</a></li>
+              @auth
+              <li><a href="{{ route('libraries') }}" class="text-black">Libraries</a></li>
+              @endauth
+              <li><a href="{{ route('category') }}" class="text-black">Category</a></li>
             </ul>
           </details>
         </li>

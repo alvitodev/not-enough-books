@@ -25,20 +25,21 @@
                     placeholder="Search the book you like..." />
             </label>
             </div>
-        
+
         <div class="flex items-center">
-        <a class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
+        <a href="{{ route('login') }}" class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
           <div class="avatar">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
           </div>
           <span class="text-xs text-white font-semibold">Sign in</span>
         </a>
         </div>
+        @endguest
 
-        @else
+        @auth
           {{-- Navbar untuk User --}}
            <div class="flex items-center">
               <label class="flex items-center gap-2 px-2 py-1 h-7 rounded-full bg-white w-90 max-w-xs">
@@ -56,15 +57,16 @@
             </div>
         
         <div class="flex items-center">
-        <a class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
+        <a href="{{ route('profile') }}" class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
           <div class="avatar">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
           </svg>
           </div>
-          <span class="text-xs text-white font-semibold">Sign in</span>
+          <span class="text-xs text-white font-semibold">{{ Auth::user()->username ?? Auth::user()->name }}</span>
         </a>
+        @endauth
 
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-xs text-white">
@@ -74,7 +76,7 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu menu-sm bg-base-100 rounded-box mt-3 w-35 p-2 shadow z-[1]">
             <li>
-                <a>
+                <a href="{{ route('profile') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                     </svg>   
@@ -92,7 +94,6 @@
             </li>
             </ul>
         </div>
-        @endguest
       </div>
     </div>
   </div>
@@ -133,7 +134,9 @@
        <li>
          <div>
           <div class="avatar w-32 h-17">
+            <a href="{{ route('home') }}">
             <img src="/images/logo-sb.png" alt="Profile" class="w-full h-full" />
+            </a>
           </div>
         </div>
       </li>
@@ -141,7 +144,7 @@
         <span class="text-sm text-black font-semibold">MENU</span>
       </li>
         <li>
-          <a class="flex items-center  gap-3 px-3 py-2 rounded-md hover:bg-gray-100">
+          <a href="{{ route('home') }}" class="flex items-center  gap-3 px-3 py-2 rounded-md hover:bg-gray-100">
           <div class="badge badge-primary rounded-md px-1 py-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
               <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
@@ -162,10 +165,10 @@
               <span class="text-sm text-black">Library</span>
             </summary>
             <ul class="ml-6 mt-1 space-y-1 text-xs text-gray-600">
-              <li><a class="text-black">Latest Updates</a></li>
-              <li><a class="text-black">Recently Addes</a></li>
-              <li><a class="text-black">Libraries</a></li>
-              <li><a class="text-black">Category</a></li>
+              <li><a href="{{ route('latest') }}" class="text-black">Latest Updates</a></li>
+              <li><a href="{{ route('recently') }}" class="text-black">Recently Addes</a></li>
+              <li><a href="{{ route('libraries') }}" class="text-black">Libraries</a></li>
+              <li><a href="{{ route('category') }}" class="text-black">Category</a></li>
             </ul>
           </details>
         </li>

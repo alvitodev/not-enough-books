@@ -52,6 +52,17 @@
                     </div>
                 </div>
             </div>
+            <!-- Admin Role Dropdown -->
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text text-xs font-medium text-neutral">Role</span>
+                </label>
+                <select name="role" class="select select-bordered w-full text-xs" required>
+                    <option value="" disabled selected>Select role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
 
             <!-- Submit -->
             <div class="mt-6">
