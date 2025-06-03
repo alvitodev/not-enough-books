@@ -10,7 +10,9 @@
     <div class="navbar-start">
         <a class="btn btn-ghost btn-sm flex items-center cursor-pointer">
         <div class="avatar w-7 h-7">
-            <img src="/images/logo-short.png" alt="Profile" class="w-full h-full rounded-full object-cover" />
+            <a href="/" class="m-0 p-0">
+                <img src="/images/logo-short.png" alt="Profile" class="w-full h-full rounded-full object-cover" />
+            </a>
         </div>
         </a>
     </div>
