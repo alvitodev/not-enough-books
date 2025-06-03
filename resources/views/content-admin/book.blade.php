@@ -6,22 +6,12 @@
         <h2 class="text-lg font-bold text-center mb-2">Welcome Back!</h2>
         <p class="text-sm text-center text-gray-500 mb-8">We missed you! Please enter your detail</p>
 
-        @if ($errors->any())
-            <div class="mb-4 text-red-600 text-sm">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>- {{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('login.store') }}">
+        <form method="POST" action="#">
             @csrf
 
             <div class="form-control mb-5">
                 <label class="label">
-                    <span class="label-text text-neutral text-sm">Email</span>
+                    <span class="label-text text-neutral text-sm">Email / Username</span>
                 </label>    
                 <input type="email" name="email" class="input input-bordered w-full text-sm" placeholder="Enter your Email" required />
             </div>
@@ -48,9 +38,9 @@
                 <label class="label">
                     <span class="label-text text-neutral text-sm">Login As</span>
                 </label>
-                <select name="is_admin" class="select select-bordered w-full text-sm" required>
-                    <option value="0" selected>User</option>
-                    <option value="1">Admin</option>
+                <select name="role" class="select select-bordered w-full text-sm" required>
+                    <option value="user" selected>User</option>
+                    <option value="admin">Admin</option>
                 </select>
             </div>
 
@@ -67,7 +57,7 @@
             </div>
 
             <div>
-                <a href="{{ route('create') }}" class="btn btn-outline w-full text-sm">Create account</a>
+                <a href="#" class="btn btn-outline w-full text-sm">Create account</a>
             </div>
         </form>
     </div>

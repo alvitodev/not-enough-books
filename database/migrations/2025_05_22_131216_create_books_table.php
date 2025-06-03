@@ -18,9 +18,7 @@ return new class extends Migration
             $table->string('publisher');
             $table->integer('year');
             $table->text('description');
-            $table->string('language');
             $table->string('cover_img');
-            $table->string('file_link');
             $table->foreignId('category_id');
             $table->timestamps();
         });

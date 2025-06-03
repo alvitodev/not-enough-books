@@ -9,8 +9,8 @@
       <div class="flex items-center space-x-4  pb-4">
         <img src="https://via.placeholder.com/80" alt="Profile Picture" class="rounded-full w-16 h-16 object-cover">
         <div>
-          <h2 class="text-xl font-bold text-gray-800">Roland Donald</h2>
-          <p class="text-xs text-gray-500">@username</p>
+          <h2 class="text-xl font-bold text-gray-800">{{ $user->name }}</h2>
+          <p class="text-xs text-gray-500">@ {{ $user->username }}</p>
         </div>
       </div>
 
@@ -32,18 +32,18 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-xs text-gray-500">First Name</p>
-            <p class="text-sm font-medium text-gray-800">Roland</p>
+            <p class="text-sm font-medium text-gray-800">{{ $user->name }}</p>
           </div>
           <div>
             <p class="text-xs text-gray-500">Last Name</p>
-            <p class="text-sm font-medium text-gray-800">Donald</p>
+            <p class="text-sm font-medium text-gray-800">-</p>
           </div>
         </div>
 
         <div>
           <p class="text-xs text-gray-500">Email</p>
           <p class="text-sm font-medium text-gray-800 flex items-center">
-            useremail@gmail.com
+          {{ $user->email }}
           </p>
         </div>
 
@@ -70,8 +70,12 @@
 
         <!-- Button -->
         <div class="flex justify-between items-center pt-4">
-        <a href="#" class="btn btn-neutral text-white text-sm">Back to home</a>
-        <a href="#" class="btn btn-emerald bg-emerald-500 text-white text-sm">Edit Profile</a>
+        @if (auth()->user()->is_admin)
+          <a href="{{ route('home-admin') }}" class="btn btn-outline text-xs">Back to Home</a>
+        @else
+          <a href="{{ route('home') }}" class="btn btn-outline text-xs">Back to Home</a>
+        @endif
+        <a href="{{ route('edit-profile') }}" class="btn btn-emerald bg-emerald-500 text-white text-sm">Edit Profile</a>
         </div>
       </div>
     </div>

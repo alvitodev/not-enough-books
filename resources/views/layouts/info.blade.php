@@ -8,7 +8,7 @@
     <div class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent shadow-none">
   <div class="flex justify-between items-center w-full px-4 relative">
     <div class="navbar-start">
-        <a class="btn btn-ghost btn-sm flex items-center cursor-pointer">
+        <a href="{{ route('home') }}" class="btn btn-ghost btn-sm flex items-center cursor-pointer">
         <div class="avatar w-7 h-7">
             <img src="/images/logo-short.png" alt="Profile" class="w-full h-full rounded-full object-cover" />
         </div>

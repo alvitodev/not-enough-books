@@ -8,7 +8,9 @@
                 <p class="mb-4">
                    Ilmu Pengetahuan Tidak Bermula Dari Satu Buku
                 </p>
-                <button class="btn btn-primary">Get Started</button>
+                <button class="btn btn-primary">
+                    <a href="{{ route('home') }}">Get Started</a>
+                </button>
                 </div>
             </div>
         </div>
