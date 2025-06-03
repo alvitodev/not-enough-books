@@ -5,6 +5,7 @@
     <h1 class="text-4xl font-bold text-white">Category: {{ $category }}</h1>
   </div>
 
+  
   <!-- Books List -->
   <div class="mb-10">
     <div class="flex flex-wrap gap-6">
