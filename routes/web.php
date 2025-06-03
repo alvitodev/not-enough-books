@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 
 
@@ -12,7 +13,7 @@ Route::get('/', function () {
 
 //home page
 Route::get('/home', function () {
-    return view('content-admin.home');
+    return view('content.home');
 });
 
 //home page
@@ -45,9 +46,8 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 
 
-Route::get('/editprofile', function () {
-    return view('user.edit-profile');
-});
+Route::get('/editprofile', [ProfileController::class, 'index']);
+
 Route::get('/profile', function () {
     return view('user.edit-profile');
 });
