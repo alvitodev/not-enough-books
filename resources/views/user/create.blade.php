@@ -6,7 +6,7 @@
         <h2 class="text-2xl font-bold text-center mb-2">Create account</h2>
         <p class="text-sm text-center text-gray-500 mb-6">Let's create your own account</p>
 
-        <form method="POST" action="{{ route('register.store') }}">
+        <form method="POST" action="/register">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -15,7 +15,7 @@
                     <label class="label">
                         <span class="label-text text-xs font-medium text-neutral">Your name</span>
                     </label>
-                    <input type="text" name="name" class="input input-bordered w-full text-xs" placeholder="Enter your name" required />
+                    <input type="text" name="name" class="input input-bordered w-full text-xs" placeholder="Enter your name" required value="{{ old('name') }}" />
                 </div>
 
                 <!-- Username -->
@@ -23,7 +23,7 @@
                     <label class="label">
                         <span class="label-text text-xs font-medium text-neutral">Username</span>
                     </label>
-                    <input type="text" name="username" class="input input-bordered w-full text-xs" placeholder="Choose a username" required />
+                    <input type="text" name="username" class="input input-bordered w-full text-xs" placeholder="Choose a username" required value="{{ old('username') }}" />
                 </div>
 
                 <!-- Email -->
@@ -31,7 +31,7 @@
                     <label class="label">
                         <span class="label-text text-xs font-medium text-neutral">Email</span>
                     </label>
-                    <input type="email" name="email" class="input input-bordered w-full text-xs" placeholder="Enter your Email" required />
+                    <input type="email" name="email" class="input input-bordered w-full text-xs" placeholder="Enter your Email" required value="{{ old('email') }}" />
                 </div>
 
                 <!-- Password -->
@@ -74,7 +74,7 @@
 
             <!-- Login Link -->
             <div>
-                <a href="{{ route('login') }}" class="btn btn-outline w-full text-sm">Log in</a>
+                <a href="/login" class="btn btn-outline w-full text-sm">Log in</a>
             </div>
         </form>
     </div>

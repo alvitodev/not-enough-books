@@ -104,85 +104,61 @@
 <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col items-center justify-center">
   <div class="hero min-h-screen" style="background-image: url('/images/bg-primary.png');">
-<div class="bg-cover bg-center min-h-screen px-8 py-12" style="background-image: url('/images/background-library.jpg')">
+  
+<!-- Content start-->
+<div class="max-w-4xl mx-auto mt-8 backdrop-blur-md bg-base-100/30 border border-white/20 rounded-xl shadow-xl p-5">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <!-- Cover Image -->
+    <figure class="mx-auto">
+      <img src="{{ $book->cover_img }}" alt="Book Cover" class="w-32 rounded-xl shadow-md" />
+    </figure>
 
-<div class="mt-10">
-  <div class="flex justify-center">
-    <div class="card w-full max-w-6xl bg-transparent backdrop-blur-md bg-base-100/30 border border-white/10 shadow-md rounded-xl overflow-hidden">
-      <div class="grid grid-cols-1 md:grid-cols-4">
-        <!-- Cover Image -->
-        <figure class="md:col-span-1">
-          <img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-               alt="Book Cover"
-               class="w-full h-full object-cover rounded-l-xl md:rounded-xl md:rounded-r-none" />
-        </figure>
+    <!-- Book Info -->
+    <div class="md:col-span-2 space-y-3 text-white text-[15px] leading-relaxed">
+      <h2 class="text-xl font-semibold">
+        {{ $book->title }}
+      </h2>
+      <p class="opacity-80">Author: <span class="font-medium">{{ $book->author }}</span></p>
+      <p class="opacity-90">
+        {{$book->description}}
+      </p>
 
-        <!-- Content -->
-        <div class="md:col-span-3 ml-6 mr-4 space-y-4 text-white max-h-90 overflow-y-auto pr-2">
+      <!-- Metadata -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+        <p><span class="font-semibold">Categories:</span> {{ $book->category->title }}</p>
+        <p><span class="font-semibold">Publisher:</span> {{ $book->publisher }}</p>
+        <p><span class="font-semibold">Publish Year:</span> {{ $book->year }}</p>
+        <p><span class="font-semibold">Language:</span> {{ $book->language }}</p>
+        <p><span class="font-semibold">Content Type:</span> Book</p>
+      </div>
 
-          <!-- Judul -->
-          <h2 class="text-xl font-bold mt-5">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones
-          </h2>
-          
-          <!-- Author -->
-          <p class="text-sm opacity-80">Author: <span class="font-medium">James Clear</span></p>
-
-          <!-- Deskripsi -->
-          <p class="text-xs opacity-90 leading-relaxed">
-           "Tiny Changes, Remarkable Results No matter your goals, Atomic Habits offers a proven framework for improving--every day. James Clear, one of the world's leading experts on habit formation, reveals practical strategies that will teach you exactly how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results. If you're having trouble changing your habits, the problem isn't you. The problem is your system. Bad habits repeat themselves again and again not because you don't want to change, but because you have the wrong system for change. You do not rise to the level of your goals. You fall to the level of your systems. Here, you'll get a proven system that can take you to new heights. Clear is known for his ability to distill complex topics into simple behaviors that can be easily applied to daily life and work. Here, he draws on the most proven ideas from biology, psychology, and neuroscience to create an easy-to-understand guide for making good habits inevitable and bad habits impossible."
-          </p>
-
-          <!-- Info Buku -->
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs">
-            <p><span class="font-semibold">Categories:</span> Psychology</p>
-            <p><span class="font-semibold">Publisher:</span> Penguin Publishing Group</p>
-            <p><span class="font-semibold">Publish Year:</span> 2018</p>
-            <p><span class="font-semibold">Language:</span> English</p>
-            <p><span class="font-semibold">Content Type:</span> Book</p>
-          </div>
-
-          <!-- Aksi -->
-          <div class="flex flex-wrap gap-2 pt-2">
-            <button class="btn btn-sm btn-success text-white">Read Online</button>
-            <button class="btn btn-sm btn-neutral text-white">Add to Library</button>
-            <button class="btn btn-sm btn-secondary text-white">Download</button>
-          </div>
-        </div>
+      <!-- Buttons -->
+      <div class="flex flex-wrap gap-3 pt-3">
+        <button class="btn btn-sm btn-primary text-white">Read Online</button>
+        <button class="btn btn-sm btn-warning text-white">Add to Library</button>
+        <button class="btn btn-sm btn-secondary">Download</button>
       </div>
     </div>
-  </div>
-
-
-<div class="mb-10 mt-10 w-full max-w-none">
-  <div class="flex justify-between items-center mb-5 ">
-      <a href="#" class="text-2xl text-white font-semibold px-8 block">You may be interest</a>
-    </div>
-  <div class="flex flex-wrap gap-6 justify-start w-full">
-    @for ($i = 0; $i < 4; $i++)
-      <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
-        <figure class="flex-shrink-0 w-1/2">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-            alt="Movie"
-            class="w-full h-full object-cover rounded-xl" />
-        </figure>
-        <div class="card-body px-3 py-0">
-
-          <div class="flex flex-col space-y-1">
-          <a href="#" class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-            Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
-          <a href="#" class="text-white text-[10px] hover:text-base-300">Author123</a>
-          <a class="text-primary text-[10px]">2 minutes ago</a>
-          </div>
-          <div class="card-actions justify-start mb-2">
-            <button class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</button>
-          </div>
-        </div>
-      </div>
-    @endfor
   </div>
 </div>
+
+<div class="mb-0">
+  
+</div>
+ 
+  
+<!-- Content end-->  
+
+</div>
+ <div class="fixed bottom-8 left-[56%] -translate-x-1/2 z-50">
+  <div class="join shadow-lg rounded-xl bg-white/80 backdrop-blur-md px-4 py-2 space-x-1">
+    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="prev" checked />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="1" />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="2" />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="3" />
+    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="4" />
+    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="next" />
+  </div>
 </div>
 
 
