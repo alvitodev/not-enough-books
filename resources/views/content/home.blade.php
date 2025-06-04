@@ -186,7 +186,9 @@
         <li>
           <div>
             <div class="avatar w-32 h-17">
-              <img src="/images/logo-sb.png" alt="Profile" class="w-full h-full" />
+              <a href="{{ route('home') }}">
+                <img src="/images/logo-sb.png" alt="Profile" class="w-full h-full" />
+              </a>
             </div>
           </div>
         </li>
@@ -194,7 +196,7 @@
           <span class="text-sm text-black font-semibold">MENU</span>
         </li>
         <li>
-          <a class="flex items-center  gap-3 px-3 py-2 rounded-md hover:bg-gray-100">
+          <a href="{{ route('home') }}" class="flex items-center  gap-3 px-3 py-2 rounded-md hover:bg-gray-100">
             <div class="badge badge-primary rounded-md px-1 py-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house"
                 viewBox="0 0 16 16">
@@ -202,7 +204,7 @@
                   d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
               </svg>
             </div>
-            <span class="text-[1] text-black">Home</span>
+            <span class="text-sm text-black">Home</span>
           </a>
         </li>
         <li>
@@ -217,7 +219,7 @@
                     d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
                 </svg>
               </div>
-              <span class="text-[1] text-black">Library</span>
+              <span class="text-sm text-black">Library</span>
             </summary>
             <ul class="ml-6 mt-1 space-y-1 text-sm text-gray-600">
               <li><a href="{{ route('latest') }}" class="text-black">Latest Updates</a></li>
