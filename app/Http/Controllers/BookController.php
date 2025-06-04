@@ -2,169 +2,288 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Books; // Menggunakan model Books
-use App\Models\User;   // Jika masih dipakai untuk filter author
-use App\Models\Category; // Jika masih dipakai untuk filter category
+use App\Models\book;
+use App\Models\Library;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource for the home page.
-     */
-    public function home() // Method untuk route('home')
-    {
-        // Anda bisa menambahkan filter atau paginasi di sini jika diperlukan
-        $latestBooks = Books::latest()->take(8)->get(); // Ambil 8 buku terbaru sebagai contoh
-        $recentBooks = Books::orderBy('created_at', 'desc')->take(4)->get(); // Contoh untuk recent books
+    //admin 
 
-        // Cek apakah file view ada sebelum me-return
-        // Jika view `content.home` adalah untuk admin, pastikan itu benar.
-        // Jika `content.home` adalah untuk user, maka kirim data yang sesuai.
-        return view('content.home', [
-            'books' => $latestBooks, // Untuk section "Latest Updates"
-            'recentBooks' => $recentBooks // Untuk section "Recently Added"
-            // Kirim variabel lain yang dibutuhkan oleh view content.home
-        ]);
+    public function homeAdmin() //show books at home
+    {
+        // Example: get 4 latest books
+        $recentBooksA = book::orderBy('id', 'desc')->take(4)->get();
+    
+        // Example: get 4 recently added books (can be same as latest or customized)
+        $latestBooksA = book::orderBy('year', 'desc')->take(4)->get();
+    
+        return view('content-admin.home', compact('latestBooksA', 'recentBooksA'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Books $book) // Menggunakan model Books untuk route model binding
+    public function latestAdmin() //show books at latest
     {
-        return view('content.book', [ // View untuk menampilkan detail satu buku
-            "title" => $book->title, // Judul halaman bisa dari judul buku
-            "book" => $book
-        ]);
+        $latestUpdatedBooksA = book::orderBy('year', 'desc')->paginate(4);
+        return view('content-admin.latest', compact('latestUpdatedBooksA'));
     }
 
-    /**
-     * Show the form for creating a new resource (Admin).
-     * Ini akan dipanggil oleh rute GET admin/books/add
-     */
-    public function create()
+    public function recentAdmin() //show books at recently
     {
-        // Anda mungkin perlu mengirim data kategori ke view
-        // $categories = Category::all();
-        // return view('content-admin.add-book', compact('categories'));
-        return view('content-admin.add-book');
+        $recentlyAddedBooksA = book::orderBy('id', 'desc')->paginate(4);
+        return view('content-admin.recently', compact('recentlyAddedBooksA'));
     }
 
-    /**
-     * Store a newly created resource in storage (Admin).
-     * Ini akan dipanggil oleh rute POST admin/books
-     */
-    public function store(Request $request)
+    public function showAdmin($id) //show books detail
     {
-        // Validasi data dari form add-book.blade.php
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255', // Jika author hanya string
-            // 'author_id' => 'required|exists:authors,id', // Jika author adalah relasi
-            'category_id' => 'required|exists:categories,id', // Pastikan ada category_id dari form
-            'year' => 'required|integer|min:1000|max:' . date('Y'),
-            'publisher' => 'required|string|max:255',
-            'description' => 'required|string',
-            'cover_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Contoh validasi gambar
-            'slug' => 'required|string|unique:books,slug' // Slug bisa di-generate otomatis
-        ]);
+        $bookA = book::findOrFail($id); // fetch by ID, or 404 if not found
+        return view('content-admin.book', compact('bookA'));
+    }
 
-        // Handle file upload untuk cover_img
-        if ($request->hasFile('cover_img')) {
-            $path = $request->file('cover_img')->store('book_covers', 'public'); // Simpan di storage/app/public/book_covers
-            $validatedData['cover_img'] = $path;
+    public function showCategoryAdmin()
+    {
+        // Get unique categories from the books table
+        $categoriesA = book::select('category')
+                        ->distinct()
+                        ->orderBy('category')
+                        ->get();
+    
+        return view('content-admin.category', compact('categoriesA'));
+    }
+
+    public function showBooksByCategoryAdmin($category)
+    {
+        $booksA = book::where('category', $category)->latest()->paginate(8);
+        return view('content-admin.books_by_category', compact('booksA', 'category'));
+    }
+
+    public function addToLibraryAdmin($bookId)
+    {
+        $userId = Auth::id();
+
+        // Check if the book is already in user's library
+        $exists = Library::where('user_id', $userId)
+                        ->where('book_id', $bookId)
+                        ->exists();
+
+        if (!$exists) {
+            Library::create([
+                'user_id' => $userId,
+                'book_id' => $bookId,
+            ]);
         }
 
-        // Jika slug tidak diisi manual, bisa di-generate dari title
-        // $validatedData['slug'] = \Illuminate\Support\Str::slug($request->title);
-        // Atau biarkan EloquentSluggable yang handle jika sudah disetup dengan benar.
-
-        Books::create($validatedData);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Book added successfully!'); // Redirect ke dashboard admin
+        return redirect()->back()->with('success', 'Book added to your library.');
     }
 
-    /**
-     * Show the form for editing the specified resource (Admin).
-     * Ini akan dipanggil oleh rute GET admin/books/{book}/edit
-     */
-    public function edit(Books $book)
+    public function userLibraryAdmin() //show the books in library
     {
-        // $categories = Category::all();
-        // return view('content-admin.edit-book', compact('book', 'categories'));
-        return view('content-admin.edit-book', compact('book'));
+        $userId = Auth::id();
+        $libraryBooksA = Library::with('book')
+                        ->where('user_id', $userId)
+                        ->latest()
+                        ->get();
+
+        return view('content-admin.libraries', compact('libraryBooksA'));
+    }   
+    
+    public function removeFromLibraryAdmin($bookId)
+    {
+        $userId = Auth::id();
+    
+        Library::where('user_id', $userId)
+            ->where('book_id', $bookId)
+            ->delete();
+    
+        return redirect()->back()->with('success', 'Book removed from your library.');
     }
 
-    /**
-     * Update the specified resource in storage (Admin).
-     * Ini akan dipanggil oleh rute PUT/PATCH admin/books/{book}
-     */
-    public function update(Request $request, Books $book)
+    public function recommendAdmin($id)
     {
-        $validatedData = $request->validate([
+        $book = Book::findOrFail($id);
+
+        // Recommend 4 books from the same category (excluding the current one)
+        $recommendedBooksA = Book::where('category', $book->category)
+            ->where('id', '!=', $book->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('content-admin.book', compact('book', 'recommendedBooksA'));
+    }
+
+    public function searchAdmin(Request $request)
+    {
+        $query = $request->input('query');
+        $category = $request->input('category');
+    
+        $books = Book::query();
+    
+        if ($query) {
+            $books->where('title', 'like', "%{$query}%")
+                  ->orWhere('author', 'like', "%{$query}%");
+        }
+    
+        if ($category) {
+            $books->where('category', $category);
+        }
+    
+        $booksSA = $books->latest()->get();
+    
+        return view('content-admin.search', compact('booksSA'));
+    }
+
+    public function store(Request $request) ///add books
+    {
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'year' => 'required|integer|min:1000|max:' . date('Y'),
             'publisher' => 'required|string|max:255',
-            'description' => 'required|string',
-            'cover_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-             // Slug unik, kecuali untuk buku ini sendiri
-            'slug' => 'required|string|unique:books,slug,' . $book->id
+            'year' => 'required|integer|min:1000|max:2025',
+            'description' => 'nullable|string',
+            'cover_img' => 'nullable|image|max:2048',
+            'category' => 'required|string|max:255',
         ]);
 
         if ($request->hasFile('cover_img')) {
-            // Hapus gambar lama jika ada dan jika perlu
-            // if ($book->cover_img) {
-            //     Storage::disk('public')->delete($book->cover_img);
-            // }
-            $path = $request->file('cover_img')->store('book_covers', 'public');
-            $validatedData['cover_img'] = $path;
+            $coverPath = $request->file('cover_img')->store('covers', 'public');
+            $validated['cover_img'] = $coverPath;
         }
 
-        // Jika slug tidak diisi manual dan title berubah, regenerate
-        // if ($request->title !== $book->title && empty($request->slug)) {
-        //    $validatedData['slug'] = \Illuminate\Support\Str::slug($request->title);
-        // }
+        Book::create($validated);
 
-        $book->update($validatedData);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Book updated successfully!');
+        return redirect()->route('home-admin')->with('success', 'Book added successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage (Admin).
-     * Ini akan dipanggil oleh rute DELETE admin/books/{book}
-     */
-    public function destroy(Books $book)
+    public function destroy(Book $book) //delete books
     {
-        // Hapus gambar jika ada
-        // if ($book->cover_img) {
-        //     Storage::disk('public')->delete($book->cover_img);
-        // }
         $book->delete();
-        return redirect()->route('admin.dashboard')->with('success', 'Book deleted successfully!');
+
+        return redirect()->route('home-admin')->with('success', 'Book deleted successfully!');
     }
 
+    //method for user 
 
-    // Method index() yang lama sepertinya tidak terpakai di rute,
-    // jika masih dibutuhkan, pastikan ada rute yang mengarah ke sini.
-    // public function index() {
-    //     $title = '';
-    //     if(request('category')) {
-    //         $category = Category::firstWhere('slug', request('category'));
-    //         $title = ' dalam ' . $category->name;
-    //     }
-    //     if(request('author')) {
-    //         // Asumsi author adalah relasi ke User model, atau sesuaikan jika ke Author model
-    //         $author = User::firstWhere('username', request('author'));
-    //         $title = ' oleh ' . $author->name;
-    //     }
-    //     return view('books.index', [ // Ganti 'book' menjadi 'books.index' atau nama view yang sesuai
-    //         "title" => "All Books" . $title,
-    //         "active" => 'books',
-    //         "books" => Books::latest()->filter(request(['search', 'category', 'author']))->paginate(7)->withQueryString()
-    //     ]);
-    // }
+    public function home() //show books at home
+    {
+        // Example: get 4 latest books
+        $recentBooks = book::orderBy('id', 'desc')->take(4)->get();
+    
+        // Example: get 4 recently added books (can be same as latest or customized)
+        $latestBooks = book::orderBy('year', 'desc')->take(4)->get();
+    
+        return view('content.home', compact('latestBooks', 'recentBooks'));
+    }
+
+    public function latest() //show books at latest
+    {
+        $latestUpdatedBooks = book::orderBy('year', 'desc')->paginate(4);
+        return view('content.latest', compact('latestUpdatedBooks'));
+    }
+
+    public function recent() //show books at recently
+    {
+        $recentlyAddedBooks = book::orderBy('id', 'desc')->paginate(4);
+        return view('content.recently', compact('recentlyAddedBooks'));
+    }
+
+    public function show($id) //show books detail
+    {
+        $book = book::findOrFail($id); // fetch by ID, or 404 if not found
+        return view('content.book', compact('book'));
+    }
+
+    public function showCategory()
+    {
+        // Get unique categories from the books table
+        $categories = book::select('category')
+                        ->distinct()
+                        ->orderBy('category')
+                        ->get();
+    
+        return view('content.category', compact('categories'));
+    }
+
+    public function showBooksByCategory($category)
+    {
+        $books = book::where('category', $category)->latest()->paginate(8);
+        return view('content.books_by_category', compact('books', 'category'));
+    }
+
+    public function recommend($id)
+    {
+        $book = Book::findOrFail($id);
+
+        // Recommend 4 books from the same category (excluding the current one)
+        $recommendedBooks = Book::where('category', $book->category)
+            ->where('id', '!=', $book->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('content.book', compact('book', 'recommendedBooks'));
+    }
+
+    public function addToLibrary($bookId)
+    {
+        $userId = Auth::id();
+
+        // Check if the book is already in user's library
+        $exists = Library::where('user_id', $userId)
+                        ->where('book_id', $bookId)
+                        ->exists();
+
+        if (!$exists) {
+            Library::create([
+                'user_id' => $userId,
+                'book_id' => $bookId,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Book added to your library.');
+    }
+
+    public function userLibrary() //show the books in library
+    {
+        $userId = Auth::id();
+        $libraryBooks = Library::with('book')
+                        ->where('user_id', $userId)
+                        ->latest()
+                        ->get();
+
+        return view('content.libraries', compact('libraryBooks'));
+    }   
+    
+    public function removeFromLibrary($bookId)
+    {
+        $userId = Auth::id();
+    
+        Library::where('user_id', $userId)
+            ->where('book_id', $bookId)
+            ->delete();
+    
+        return redirect()->back()->with('success', 'Book removed from your library.');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('queryU');
+        $category = $request->input('category');
+    
+        $books = Book::query();
+    
+        if ($query) {
+            $books->where('title', 'like', "%{$query}%")
+                  ->orWhere('author', 'like', "%{$query}%");
+        }
+    
+        if ($category) {
+            $books->where('category', $category);
+        }
+    
+        $booksS = $books->latest()->get();
+    
+        return view('content.search', compact('booksS'));
+    }
+
 }

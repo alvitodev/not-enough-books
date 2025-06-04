@@ -11,7 +11,7 @@
 
     @guest
       {{-- Navbar untuk Guest --}}
-            <div class="flex items-center">
+              <form action="{{ route('search-books') }}" method="GET" class="flex items-center">
               <label class="flex items-center gap-2 px-2 py-1 h-7 rounded-full bg-white w-90 max-w-xs">
                 <svg class="w-3 h-3 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
@@ -20,11 +20,12 @@
                     </g>
                 </svg>
                 <input
-                    type="search"
+                    type="text"
+                    name="queryU" 
                     class="grow text-[10px] placeholder:text-[11px] leading-none bg-transparent focus:outline-none"
                     placeholder="Search the book you like..." />
             </label>
-            </div>
+            </form>
 
         <div class="flex items-center">
         <a href="{{ route('login') }}" class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
@@ -41,7 +42,7 @@
 
         @auth
           {{-- Navbar untuk User --}}
-           <div class="flex items-center">
+          <form action="{{ route('search-books') }}" method="GET" class="flex items-center">
               <label class="flex items-center gap-2 px-2 py-1 h-7 rounded-full bg-white w-90 max-w-xs">
                 <svg class="w-3 h-3 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
@@ -50,11 +51,12 @@
                     </g>
                 </svg>
                 <input
-                    type="search"
+                    type="text"
+                    name="queryU" 
                     class="grow text-[10px] placeholder:text-[11px] leading-none bg-transparent focus:outline-none"
                     placeholder="Search the book you like..." />
             </label>
-            </div>
+            </form>
         
         <div class="flex items-center">
         <a href="{{ route('profile') }}" class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
@@ -84,13 +86,16 @@
                 </a>
             </li>
             <li>
-                <a>
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
-                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <button type="submit" class="flex items-center gap-1 text-[10px] ml-1 w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                      <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
                     </svg>  
                     <span class="text-[10] ml-1">Sign out</span>
-                </a>
+                  </button>
+                </form>
             </li>
             </ul>
         </div>
@@ -113,17 +118,6 @@
 <!-- Content end-->  
 
 </div>
- <div class="fixed bottom-8 left-[56%] -translate-x-1/2 z-50">
-  <div class="join shadow-lg rounded-xl bg-white/80 backdrop-blur-md px-4 py-2 space-x-1">
-    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="prev" checked />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="1" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="2" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="3" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="4" />
-    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="next" />
-  </div>
-</div>
-
 
 </div>
 </div>

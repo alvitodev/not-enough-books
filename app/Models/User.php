@@ -5,13 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Book;
 
 class User extends Authenticatable
 {
+    public function library()
+    {
+        return $this->hasMany(Library::class);
+    }
+    
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
+        'name', 
         'username',
         'email',
         'password',
@@ -37,35 +44,6 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Buku-buku yang dilihat oleh user ini.
-     */
-    public function viewedBooks()
-    {
-        return $this->belongsToMany(Books::class, 'views', 'user_id', 'book_id')->withTimestamps();
-    }
 
-    /**
-     * Buku-buku yang disukai oleh user ini.
-     */
-    public function likedBooks()
-    {
-        return $this->belongsToMany(Books::class, 'likes', 'user_id', 'book_id')->withTimestamps();
-    }
 
-    /**
-     * Buku-buku yang ada di wishlist user ini.
-     */
-    public function wishlistedBooks() // Mengganti nama dari wishlists() agar lebih deskriptif
-    {
-        return $this->belongsToMany(Books::class, 'wishlists', 'user_id', 'book_id')->withTimestamps();
-    }
-
-    /**
-     * Rating yang diberikan oleh user ini.
-     */
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class, 'user_id'); // Satu user bisa memberikan banyak rating
-    }
 }

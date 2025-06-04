@@ -4,13 +4,11 @@
         @vite('resources/css/app.css')
     </head>
     <body>
-
-
 <!-- NAVBAR START -->
         <div class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent shadow-none">
             <div class="navbar-start"></div>
             <div class="navbar-end flex items-center gap-4">
-            <div class="flex items-center">
+            <form action="{{ route('search-books-admin') }}" method="GET" class="flex items-center">
               <label class="flex items-center gap-2 px-2 py-1 h-7 rounded-full bg-white w-90 max-w-xs">
                 <svg class="w-3 h-3 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
@@ -19,13 +17,14 @@
                     </g>
                 </svg>
                 <input
-                    type="search"
+                    type="text"
+                    name="query" 
                     class="grow text-[10px] placeholder:text-[11px] leading-none bg-transparent focus:outline-none"
                     placeholder="Search the book you like..." />
             </label>
-            </div>
+            </form>
         <div class="flex items-center">
-        <a class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
+        <a href="{{ route('profile') }}" class="btn btn-ghost btn-sm flex items-center gap-2 cursor-pointer">
           <div class="avatar">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -34,6 +33,35 @@
           </div>
           <span class="text-xs text-white font-semibold">Admin</span>
         </a>
+        <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-xs text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            </svg>
+            </div>
+            <ul tabindex="0" class="dropdown-content menu menu-sm bg-base-100 rounded-box mt-3 w-35 p-2 shadow z-[1]">
+            <li>
+                <a href="{{ route('profile') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                    </svg>   
+                <span class="text-[10] ml-1">profile</span>
+                </a>
+            </li>
+            <li>
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <button type="submit" class="flex items-center gap-1 text-[10px] ml-1 w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                      <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+                    </svg>  
+                    <span class="text-[10] ml-1">Sign out</span>
+                  </button>
+                </form>
+            </li>
+            </ul>
+        </div>
         </div>
       </div>
     </div>
@@ -54,18 +82,6 @@
 <!-- Content end-->  
 
 </div>
- <div class="fixed bottom-8 left-[56%] -translate-x-1/2 z-50">
-  <div class="join shadow-lg rounded-xl bg-white/80 backdrop-blur-md px-4 py-2 space-x-1">
-    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="prev" checked />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="1" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="2" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="3" />
-    <input class="join-item btn btn-xs rounded-md" type="radio" name="options" aria-label="4" />
-    <input class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white transition-all duration-300" type="radio" name="options" aria-label="next" />
-  </div>
-</div>
-
-
 </div>
 </div>
   <div class="drawer-side">
@@ -87,15 +103,6 @@
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
             </svg>
           Add Book
-        </a>
-        </li>
-        <li>
-        <a href="{{ route('edit-book') }}" class="w-full bg-green-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-            <path d="M15.502 1.94a.5.5 0 0 1 0 .706l-1 1a.5.5 0 0 1-.708 0L13 3.207l1-1a.5.5 0 0 1 .708 0l.794.733zm-1.75 2.456l-1-1L5 11.146V12h.854l8.898-8.898z"/>
-            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-7a.5.5 0 0 0-1 0v7a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-            </svg>
-            Edit Book
         </a>
         </li>
       <li class="pointer-events-none hover:bg-transparent">
@@ -123,10 +130,10 @@
               <span class="text-sm text-black">Library</span>
             </summary>
             <ul class="ml-6 mt-1 space-y-1 text-xs text-gray-600">
-              <li><a href="{{ route('latest') }}" class="text-black">Latest Updates</a></li>
-              <li><a href="{{ route('recently') }}" class="text-black">Recently Addes</a></li>
-              <li><a href="{{ route('libraries') }}" class="text-black">Libraries</a></li>
-              <li><a href="{{ route('category') }}" class="text-black">Category</a></li>
+              <li><a href="{{ route('latest-admin') }}" class="text-black">Latest Updates</a></li>
+              <li><a href="{{ route('recently-admin') }}" class="text-black">Recently Addes</a></li>
+              <li><a href="{{ route('libraries-admin') }}" class="text-black">Libraries</a></li>
+              <li><a href="{{ route('category-admin') }}" class="text-black">Category</a></li>
             </ul>
           </details>
         </li>
