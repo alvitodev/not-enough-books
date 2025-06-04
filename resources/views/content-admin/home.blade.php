@@ -102,35 +102,47 @@
               </div>
               <div class="flex flex-wrap gap-6 justify-start w-full">
                 @foreach ($latestBooksA as $book)
-          <div
-            class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
-            <figure class="flex-shrink-0 w-1/2">
-            <img
-              src="{{ $book->cover_img ? asset('storage/' . $book->cover_img) : asset('/images/default-cover.jpg') }}"
-              alt="Cover" class="w-full h-full object-cover rounded-xl" />
-            </figure>
-            <div class="card-body px-3 py-0">
+              <div
+                class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
+                <figure class="flex-shrink-0 w-1/2">
+                @php
+              $coverSrcAdminLatest = asset('/images/default-cover.jpg'); // Default image
+              if ($book->cover_img) {
+              if (Illuminate\Support\Str::startsWith($book->cover_img, ['http://', 'https://'])) {
+              $coverSrcAdminLatest = $book->cover_img;
+              } elseif (Illuminate\Support\Str::startsWith($book->cover_img, '/')) {
+              $coverSrcAdminLatest = asset($book->cover_img);
+              } else {
+              $coverSrcAdminLatest = asset('storage/' . $book->cover_img);
+              }
+              }
+            @endphp
+                <img src="{{ $coverSrcAdminLatest }}" alt="Cover" class="w-full h-full object-cover rounded-xl" />
+                </figure>
+                <div class="card-body px-3 py-0">
 
-            <div class="flex flex-col space-y-1">
-              <a href="{{ route('books.show-admin', $book->id) }}"
-              class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-              {{ $book->title }}</a>
-              <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
-              <a class="text-primary text-[10px]">{{ $book->year }}</a>
-            </div>
-            <div class="card-actions justify-start mb-2">
-              <a href="{{ route('books.show-admin', $book->id) }}"
-              class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
-              <form action="{{ route('books.destroy', $book->id) }}" method="POST"
-              onsubmit="return confirm('Are you sure you want to delete this book?');">
-              @csrf
-              @method('DELETE')
-              <button type="submit"
-                class="btn btn-xs btn-error text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">Delete</button>
-              </form>
-            </div>
-            </div>
-          </div>
+                <div class="flex flex-col space-y-1">
+                  <a href="{{ route('books.show-admin', $book->id) }}"
+                  class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+                  {{ $book->title }}</a>
+                  <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
+                  <a class="text-primary text-[10px]">{{ $book->year }}</a>
+                </div>
+                <div class="card-actions justify-start mb-2">
+                  <a href="{{ route('books.show-admin', $book->id) }}"
+                  class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
+                  <a href="{{ route('books.edit', $book->id) }}"
+                  class="btn btn-xs btn-info text-white rounded-full shadow-md hover:bg-sky-700 hover:text-white transition duration-300 ease-in-out">Edit</a>
+                  <form action="{{ route('books.destroy', $book->id) }}" method="POST"
+                  onsubmit="return confirm('Are you sure you want to delete this book?');">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit"
+                    class="btn btn-xs btn-error text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">Delete</button>
+                  </form>
+                </div>
+                </div>
+              </div>
         @endforeach
               </div>
             </div>
@@ -144,34 +156,46 @@
             </div>
             <div class="flex flex-wrap gap-6 justify-start w-full">
               @foreach ($recentBooksA as $book)
-          <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
-          <figure class="flex-shrink-0 w-1/2">
-            <img
-            src="{{ $book->cover_img ? asset('storage/' . $book->cover_img) : asset('/images/default-cover.jpg') }}"
-            alt="Cover" class="w-full h-full object-cover rounded-xl" />
-          </figure>
-          <div class="card-body px-3 py-0">
+            <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
+            <figure class="flex-shrink-0 w-1/2">
+              @php
+          $coverSrcAdminRecent = asset('/images/default-cover.jpg'); // Default image
+          if ($book->cover_img) {
+          if (Illuminate\Support\Str::startsWith($book->cover_img, ['http://', 'https://'])) {
+            $coverSrcAdminRecent = $book->cover_img;
+          } elseif (Illuminate\Support\Str::startsWith($book->cover_img, '/')) {
+            $coverSrcAdminRecent = asset($book->cover_img);
+          } else {
+            $coverSrcAdminRecent = asset('storage/' . $book->cover_img);
+          }
+          }
+        @endphp
+              <img src="{{ $coverSrcAdminRecent }}" alt="Cover" class="w-full h-full object-cover rounded-xl" />
+            </figure>
+            <div class="card-body px-3 py-0">
 
-            <div class="flex flex-col space-y-1">
-            <a href="{{ route('books.show-admin', $book->id) }}"
-              class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-              {{ $book->title }}</a>
-            <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
-            <a class="text-primary text-[10px]">{{ $book->year }}</a>
+              <div class="flex flex-col space-y-1">
+              <a href="{{ route('books.show-admin', $book->id) }}"
+                class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+                {{ $book->title }}</a>
+              <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
+              <a class="text-primary text-[10px]">{{ $book->year }}</a>
+              </div>
+              <div class="card-actions justify-start mb-2">
+              <a href="{{ route('books.show-admin', $book->id) }}"
+                class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
+              <a href="{{ route('books.edit', $book->id) }}"
+                class="btn btn-xs btn-info text-white rounded-full shadow-md hover:bg-sky-700 hover:text-white transition duration-300 ease-in-out">Edit</a>
+              <form action="{{ route('books.destroy', $book->id) }}" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this book?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                class="btn btn-xs btn-error text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">Delete</button>
+              </form>
+              </div>
             </div>
-            <div class="card-actions justify-start mb-2">
-            <a href="{{ route('books.show-admin', $book->id) }}"
-              class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
-            <form action="{{ route('books.destroy', $book->id) }}" method="POST"
-              onsubmit="return confirm('Are you sure you want to delete this book?');">
-              @csrf
-              @method('DELETE')
-              <button type="submit"
-              class="btn btn-xs btn-error text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">Delete</button>
-            </form>
             </div>
-          </div>
-          </div>
         @endforeach
             </div>
           </div>

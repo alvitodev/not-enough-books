@@ -29,6 +29,7 @@
         <button class="btn btn-xs btn-neutral text-white">{{ $book->category }}</button>
         <a href="{{ route('books.show-admin', $book->id) }}"
         class="btn btn-xs btn-success text-white">read</a>
+        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-xs btn-info text-white">Edit</a>
         <form action="{{ route('library.add', $book->id) }}" method="POST" style="display: inline;">
         @csrf
         <button type="submit" class="btn btn-xs btn-warning text-white">Add Library</button>

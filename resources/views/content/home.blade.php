@@ -118,27 +118,38 @@
               </div>
               <div class="flex flex-wrap gap-6 justify-start w-full">
                 @foreach ($latestBooks as $book)
-          <div
-            class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
-            <figure class="flex-shrink-0 w-1/2">
-            <img src="{{ $book->cover_img ?? '/images/default-cover.jpg' }}" alt="Cover"
-              class="w-full h-full object-cover rounded-xl" />
-            </figure>
-            <div class="card-body px-3 py-0">
-            <div class="flex flex-col space-y-1">
-              <a href="{{ route('books.show', $book->id) }}"
-              class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-              {{ $book->title }}
-              </a>
-              <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
-              <a class="text-primary text-[10px]">{{ $book->year }}</a>
-            </div>
-            <div class="card-actions justify-start mb-2">
-              <a href="{{ route('books.show', $book->id) }}"
-              class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
-            </div>
-            </div>
-          </div>
+              <div
+                class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
+                <figure class="flex-shrink-0 w-1/2">
+                @php
+              $coverSrc = asset('/images/default-cover.jpg'); // Default image
+              if ($book->cover_img) {
+              if (Illuminate\Support\Str::startsWith($book->cover_img, ['http://', 'https://'])) {
+              $coverSrc = $book->cover_img;
+              } elseif (Illuminate\Support\Str::startsWith($book->cover_img, '/')) {
+              $coverSrc = asset($book->cover_img);
+              } else {
+              $coverSrc = asset('storage/' . $book->cover_img);
+              }
+              }
+            @endphp
+                <img src="{{ $coverSrc }}" alt="Cover" class="w-full h-full object-cover rounded-xl" />
+                </figure>
+                <div class="card-body px-3 py-0">
+                <div class="flex flex-col space-y-1">
+                  <a href="{{ route('books.show', $book->id) }}"
+                  class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+                  {{ $book->title }}
+                  </a>
+                  <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
+                  <a class="text-primary text-[10px]">{{ $book->year }}</a>
+                </div>
+                <div class="card-actions justify-start mb-2">
+                  <a href="{{ route('books.show', $book->id) }}"
+                  class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
+                </div>
+                </div>
+              </div>
         @endforeach
               </div>
             </div>
@@ -151,26 +162,37 @@
             </div>
             <div class="flex flex-wrap gap-6 justify-start w-full">
               @foreach ($recentBooks as $book)
-          <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
-          <figure class="flex-shrink-0 w-1/2">
-            <img src="{{ $book->cover_img ?? '/images/default-cover.jpg' }}" alt="Cover"
-            class="w-full h-full object-cover rounded-xl" />
-          </figure>
-          <div class="card-body px-3 py-0">
-            <div class="flex flex-col space-y-1">
-            <a href="{{ route('books.show', $book->id) }}"
-              class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
-              {{ $book->title }}
-            </a>
-            <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
-            <a class="text-primary text-[10px]">{{ $book->year }}</a>
+            <div class="card card-side min-w-[220px] max-w-[240px] w-[23%] bg-transparent backdrop-blur-md shadow-sm">
+            <figure class="flex-shrink-0 w-1/2">
+              @php
+          $coverSrcRecent = asset('/images/default-cover.jpg'); // Default image
+          if ($book->cover_img) {
+          if (Illuminate\Support\Str::startsWith($book->cover_img, ['http://', 'https://'])) {
+            $coverSrcRecent = $book->cover_img;
+          } elseif (Illuminate\Support\Str::startsWith($book->cover_img, '/')) {
+            $coverSrcRecent = asset($book->cover_img);
+          } else {
+            $coverSrcRecent = asset('storage/' . $book->cover_img);
+          }
+          }
+        @endphp
+              <img src="{{ $coverSrcRecent }}" alt="Cover" class="w-full h-full object-cover rounded-xl" />
+            </figure>
+            <div class="card-body px-3 py-0">
+              <div class="flex flex-col space-y-1">
+              <a href="{{ route('books.show', $book->id) }}"
+                class="card-title text-xs text-white font-medium no-underline mt-3 hover:text-base-300">
+                {{ $book->title }}
+              </a>
+              <a href="#" class="text-white text-[10px] hover:text-base-300">{{ $book->author }}</a>
+              <a class="text-primary text-[10px]">{{ $book->year }}</a>
+              </div>
+              <div class="card-actions justify-start mb-2">
+              <a href="{{ route('books.show', $book->id) }}"
+                class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
+              </div>
             </div>
-            <div class="card-actions justify-start mb-2">
-            <a href="{{ route('books.show', $book->id) }}"
-              class="btn btn-xs btn-success text-white rounded-full shadow-md hover:bg-green-800 hover:text-white transition duration-300 ease-in-out">read</a>
             </div>
-          </div>
-          </div>
         @endforeach
             </div>
           </div>

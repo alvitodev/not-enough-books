@@ -6,6 +6,8 @@ use App\Models\book;
 use App\Models\Library;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -163,6 +165,45 @@ class BookController extends Controller
         return redirect()->route('home-admin')->with('success', 'Book added successfully!');
     }
 
+    public function edit(Book $book) // Show the form for editing the specified book.
+    {
+        return view('content-admin.edit-book', compact('book'));
+    }
+
+    public function update(Request $request, Book $book) // Update the specified book in storage.
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'publisher' => 'required|string|max:255',
+            'year' => 'required|integer|min:1000|max:2025',
+            'description' => 'nullable|string',
+            'cover_img' => 'nullable|image|max:2048', // Max 2MB
+            'category' => 'required|string|max:255',
+        ]);
+
+        if ($request->hasFile('cover_img')) {
+            // Delete old cover if it exists and is not an external URL or a public path
+            if (
+                $book->cover_img &&
+                !Str::startsWith($book->cover_img, ['http://', 'https://']) &&
+                !Str::startsWith($book->cover_img, '/')
+            ) {
+                Storage::disk('public')->delete($book->cover_img);
+            }
+            // Store new cover
+            $coverPath = $request->file('cover_img')->store('covers', 'public');
+            $validated['cover_img'] = $coverPath;
+        } else {
+            // Keep the old cover if no new image is uploaded
+            $validated['cover_img'] = $book->cover_img;
+        }
+
+        $book->update($validated);
+
+        return redirect()->back()->with('success', 'Book updated successfully!');
+    }
+
     public function destroy(Book $book) //delete books
     {
         $book->delete();
@@ -171,6 +212,11 @@ class BookController extends Controller
     }
 
     //method for user 
+
+    public function landingPage() // Show the landing page
+    {
+        return view('content.landing');
+    }
 
     public function home() //show books at home
     {

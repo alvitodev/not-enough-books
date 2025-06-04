@@ -123,10 +123,11 @@
 
                     <!-- Aksi -->
                     <div class="flex flex-wrap gap-2 pt-2">
-                      <form action="{{ route('library.add', $book->id) }}" method="POST" style="display: inline;">
+                      <form action="{{ route('library.add-admin', $book->id) }}" method="POST" style="display: inline;">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-neutral text-white">Add to Library</button>
                       </form>
+                      <a href="{{ route('books.edit', $book->id) }}" class="btn btn-sm btn-info text-white">Edit</a>
                       <form action="{{ route('books.destroy', $book->id) }}" method="POST"
                         onsubmit="return confirm('Are you sure you want to delete this book?');"
                         style="display: inline;">

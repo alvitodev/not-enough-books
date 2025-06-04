@@ -29,7 +29,7 @@
         <button class="btn btn-xs btn-neutral text-white">{{ $item->book->category }}</button>
         <a href="{{ route('books.show-admin', $item->book->id) }}"
         class="btn btn-xs btn-success text-white">Read</a>
-        <button class="btn btn-xs btn-warning text-white">edit</button>
+        <a href="{{ route('books.edit', $item->book->id) }}" class="btn btn-xs btn-info text-white">Edit</a>
         <form action="{{ route('library.remove', $item->book->id) }}" method="POST"
         onsubmit="return confirm('Remove this book from your library?');">
         @csrf

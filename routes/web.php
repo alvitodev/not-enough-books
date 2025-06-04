@@ -16,7 +16,7 @@ use App\Http\Middleware\AdminMiddleware;
 */
 
 // Landing page and basic routes
-Route::get('/', [BookController::class, 'home'])->name('landing');
+Route::get('/', [BookController::class, 'landingPage'])->name('landing');
 
 // Authentication routes
 Route::middleware('guest')->group(function () {
@@ -66,6 +66,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         return view('content-admin.add-book');
     })->name('add-book');
     Route::post('/add-book', [BookController::class, 'store'])->name('books.store');
+    Route::get('/edit-book/{book}', [BookController::class, 'edit'])->name('books.edit');
+    Route::put('/update-book/{book}', [BookController::class, 'update'])->name('books.update');
     Route::get('/edit-book', function () {
         return view('content-admin.edit-book');
     })->name('edit-book');

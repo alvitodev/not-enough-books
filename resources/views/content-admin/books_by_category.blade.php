@@ -34,6 +34,7 @@
       <div class="card-actions justify-start mt-1">
         <button class="btn btn-xs btn-neutral text-white">{{ $book->category }}</button>
         <a href="{{ route('books.show-admin', $book->id) }}" class="btn btn-xs btn-success text-white">Read</a>
+        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-xs btn-info text-white">Edit</a>
         <form action="{{ route('books.destroy', $book->id) }}" method="POST"
         onsubmit="return confirm('Are you sure you want to delete this book?');">
         @csrf
