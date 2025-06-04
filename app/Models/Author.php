@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Author extends Model
 {
-    /** @use HasFactory<\Database\Factories\AuthorFactory> */
     use HasFactory;
+
+    protected $fillable = ['name']; // Atau $guarded = ['id'];
+
+    // Jika Anda memiliki author_id di tabel books, Anda bisa menambahkan relasi:
+    // public function books()
+    // {
+    //     return $this->hasMany(Books::class, 'author_id');
+    // }
 }
