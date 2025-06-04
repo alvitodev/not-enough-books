@@ -67,7 +67,7 @@
             </div>
 
             <div>
-                <a href="{{ route('create') }}" class="btn btn-outline w-full text-sm">Create account</a>
+                <a href="/register" class="btn btn-outline w-full text-sm">Create account</a>
             </div>
         </form>
     </div>

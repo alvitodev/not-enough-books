@@ -30,6 +30,7 @@ class User extends Authenticatable
         'password',
         'is_admin'
     ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
