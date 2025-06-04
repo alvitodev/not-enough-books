@@ -26,14 +26,33 @@ class BookController extends Controller
 
     public function latestAdmin() //show books at latest
     {
-        $latestUpdatedBooksA = book::orderBy('year', 'desc')->paginate(4);
-        return view('content-admin.latest', compact('latestUpdatedBooksA'));
+        $categoriesA = Book::select('category')->distinct()->orderBy('category')->get();
+        $selectedCategory = request()->query('category');
+
+        $latestUpdatedBooksQuery = book::orderBy('year', 'desc');
+
+        if ($selectedCategory) {
+            $latestUpdatedBooksQuery->where('category', $selectedCategory);
+        }
+
+        $latestUpdatedBooksA = $latestUpdatedBooksQuery->paginate(4)->withQueryString();
+
+        return view('content-admin.latest', compact('latestUpdatedBooksA', 'categoriesA', 'selectedCategory'));
     }
 
     public function recentAdmin() //show books at recently
     {
-        $recentlyAddedBooksA = book::orderBy('id', 'desc')->paginate(4);
-        return view('content-admin.recently', compact('recentlyAddedBooksA'));
+        $categoriesA = Book::select('category')->distinct()->orderBy('category')->get();
+        $selectedCategory = request()->query('category');
+
+        $recentlyAddedBooksQuery = book::orderBy('id', 'desc');
+
+        if ($selectedCategory) {
+            $recentlyAddedBooksQuery->where('category', $selectedCategory);
+        }
+
+        $recentlyAddedBooksA = $recentlyAddedBooksQuery->paginate(4)->withQueryString();
+        return view('content-admin.recently', compact('recentlyAddedBooksA', 'categoriesA', 'selectedCategory'));
     }
 
     public function showAdmin($id) //show books detail
@@ -229,16 +248,36 @@ class BookController extends Controller
         return view('content.home', compact('latestBooks', 'recentBooks'));
     }
 
-    public function latest() //show books at latest
+    public function latest(Request $request) //show books at latest
     {
-        $latestUpdatedBooks = book::orderBy('year', 'desc')->paginate(4);
-        return view('content.latest', compact('latestUpdatedBooks'));
+        $categories = Book::select('category')->distinct()->orderBy('category')->get();
+        $selectedCategory = $request->query('category');
+
+        $latestUpdatedBooksQuery = book::orderBy('year', 'desc');
+
+        if ($selectedCategory) {
+            $latestUpdatedBooksQuery->where('category', $selectedCategory);
+        }
+
+        $latestUpdatedBooks = $latestUpdatedBooksQuery->paginate(4)->withQueryString(); // Added withQueryString() to preserve category filter during pagination
+
+        return view('content.latest', compact('latestUpdatedBooks', 'categories', 'selectedCategory'));
     }
 
-    public function recent() //show books at recently
+    public function recent(Request $request) //show books at recently
     {
-        $recentlyAddedBooks = book::orderBy('id', 'desc')->paginate(4);
-        return view('content.recently', compact('recentlyAddedBooks'));
+        $categories = Book::select('category')->distinct()->orderBy('category')->get();
+        $selectedCategory = $request->query('category');
+
+        $recentlyAddedBooksQuery = book::orderBy('id', 'desc');
+
+        if ($selectedCategory) {
+            $recentlyAddedBooksQuery->where('category', $selectedCategory);
+        }
+
+        $recentlyAddedBooks = $recentlyAddedBooksQuery->paginate(4)->withQueryString(); // Added withQueryString() to preserve category filter during pagination
+
+        return view('content.recently', compact('recentlyAddedBooks', 'categories', 'selectedCategory'));
     }
 
     public function show($id) //show books detail

@@ -2,7 +2,22 @@
 @section('content')
   <div class="bg-cover bg-center min-h-screen px-8 py-12" style="background-image: url('/images/background-library.jpg')">
     <div class="flex justify-between items-center mb-8 ml-10">
-    <h1 class="text-4xl font-bold text-white">Recently Addes</h1>
+    <h1 class="text-4xl font-bold text-white">Recently Added</h1>
+    </div>
+
+    <!-- Category Links -->
+    <div
+    class="flex items-center gap-x-2 overflow-x-auto rounded-full bg-white w-auto md:w-max h-9 mb-12 ml-10 shadow-lg px-2">
+    <a href="{{ route('recently-admin') }}"
+      class="text-neutral text-sm px-3 py-1 rounded-full hover:bg-gray-200 {{ !$selectedCategory ? 'bg-gray-300 font-semibold' : '' }}">
+      All Categories
+    </a>
+    @foreach ($categoriesA as $category)
+    <a href="{{ route('recently-admin', ['category' => $category->category]) }}"
+      class="text-neutral text-sm px-3 py-1 rounded-full hover:bg-gray-200 {{ $selectedCategory == $category->category ? 'bg-gray-300 font-semibold' : '' }}">
+      {{ $category->category }}
+    </a>
+    @endforeach
     </div>
 
     <!-- Latest Updates -->
