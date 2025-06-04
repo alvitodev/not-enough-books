@@ -34,6 +34,6 @@ class View extends Model // Untuk saat ini kita anggap sebagai Model biasa
 
     public function book() // Nama method bisa 'books' atau 'book'
     {
-        return $this->belongsTo(Books::class); // Sesuaikan dengan nama model buku Anda
+        return $this->belongsTo(Book::class); // Sesuaikan dengan nama model buku Anda
     }
 }
