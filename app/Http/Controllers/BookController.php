@@ -15,10 +15,10 @@ class BookController extends Controller
     {
         // Example: get 4 latest books
         $recentBooksA = book::orderBy('id', 'desc')->take(4)->get();
-    
+
         // Example: get 4 recently added books (can be same as latest or customized)
         $latestBooksA = book::orderBy('year', 'desc')->take(4)->get();
-    
+
         return view('content-admin.home', compact('latestBooksA', 'recentBooksA'));
     }
 
@@ -36,18 +36,26 @@ class BookController extends Controller
 
     public function showAdmin($id) //show books detail
     {
-        $bookA = book::findOrFail($id); // fetch by ID, or 404 if not found
-        return view('content-admin.book', compact('bookA'));
+        $book = book::findOrFail($id);
+
+        // Recommend 4 books from the same category (excluding the current one)
+        $recommendedBooksA = Book::where('category', $book->category)
+            ->where('id', '!=', $book->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('content-admin.book', compact('book', 'recommendedBooksA'));
     }
 
     public function showCategoryAdmin()
     {
         // Get unique categories from the books table
         $categoriesA = book::select('category')
-                        ->distinct()
-                        ->orderBy('category')
-                        ->get();
-    
+            ->distinct()
+            ->orderBy('category')
+            ->get();
+
         return view('content-admin.category', compact('categoriesA'));
     }
 
@@ -63,8 +71,8 @@ class BookController extends Controller
 
         // Check if the book is already in user's library
         $exists = Library::where('user_id', $userId)
-                        ->where('book_id', $bookId)
-                        ->exists();
+            ->where('book_id', $bookId)
+            ->exists();
 
         if (!$exists) {
             Library::create([
@@ -80,21 +88,21 @@ class BookController extends Controller
     {
         $userId = Auth::id();
         $libraryBooksA = Library::with('book')
-                        ->where('user_id', $userId)
-                        ->latest()
-                        ->get();
+            ->where('user_id', $userId)
+            ->latest()
+            ->get();
 
         return view('content-admin.libraries', compact('libraryBooksA'));
-    }   
-    
+    }
+
     public function removeFromLibraryAdmin($bookId)
     {
         $userId = Auth::id();
-    
+
         Library::where('user_id', $userId)
             ->where('book_id', $bookId)
             ->delete();
-    
+
         return redirect()->back()->with('success', 'Book removed from your library.');
     }
 
@@ -116,20 +124,20 @@ class BookController extends Controller
     {
         $query = $request->input('query');
         $category = $request->input('category');
-    
+
         $books = Book::query();
-    
+
         if ($query) {
             $books->where('title', 'like', "%{$query}%")
-                  ->orWhere('author', 'like', "%{$query}%");
+                ->orWhere('author', 'like', "%{$query}%");
         }
-    
+
         if ($category) {
             $books->where('category', $category);
         }
-    
+
         $booksSA = $books->latest()->get();
-    
+
         return view('content-admin.search', compact('booksSA'));
     }
 
@@ -168,10 +176,10 @@ class BookController extends Controller
     {
         // Example: get 4 latest books
         $recentBooks = book::orderBy('id', 'desc')->take(4)->get();
-    
+
         // Example: get 4 recently added books (can be same as latest or customized)
         $latestBooks = book::orderBy('year', 'desc')->take(4)->get();
-    
+
         return view('content.home', compact('latestBooks', 'recentBooks'));
     }
 
@@ -190,17 +198,25 @@ class BookController extends Controller
     public function show($id) //show books detail
     {
         $book = book::findOrFail($id); // fetch by ID, or 404 if not found
-        return view('content.book', compact('book'));
+
+        // Recommend 4 books from the same category (excluding the current one)
+        $recommendedBooks = Book::where('category', $book->category)
+            ->where('id', '!=', $book->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('content.book', compact('book', 'recommendedBooks'));
     }
 
     public function showCategory()
     {
         // Get unique categories from the books table
         $categories = book::select('category')
-                        ->distinct()
-                        ->orderBy('category')
-                        ->get();
-    
+            ->distinct()
+            ->orderBy('category')
+            ->get();
+
         return view('content.category', compact('categories'));
     }
 
@@ -230,8 +246,8 @@ class BookController extends Controller
 
         // Check if the book is already in user's library
         $exists = Library::where('user_id', $userId)
-                        ->where('book_id', $bookId)
-                        ->exists();
+            ->where('book_id', $bookId)
+            ->exists();
 
         if (!$exists) {
             Library::create([
@@ -247,21 +263,21 @@ class BookController extends Controller
     {
         $userId = Auth::id();
         $libraryBooks = Library::with('book')
-                        ->where('user_id', $userId)
-                        ->latest()
-                        ->get();
+            ->where('user_id', $userId)
+            ->latest()
+            ->get();
 
         return view('content.libraries', compact('libraryBooks'));
-    }   
-    
+    }
+
     public function removeFromLibrary($bookId)
     {
         $userId = Auth::id();
-    
+
         Library::where('user_id', $userId)
             ->where('book_id', $bookId)
             ->delete();
-    
+
         return redirect()->back()->with('success', 'Book removed from your library.');
     }
 
@@ -269,20 +285,20 @@ class BookController extends Controller
     {
         $query = $request->input('queryU');
         $category = $request->input('category');
-    
+
         $books = Book::query();
-    
+
         if ($query) {
             $books->where('title', 'like', "%{$query}%")
-                  ->orWhere('author', 'like', "%{$query}%");
+                ->orWhere('author', 'like', "%{$query}%");
         }
-    
+
         if ($category) {
             $books->where('category', $category);
         }
-    
+
         $booksS = $books->latest()->get();
-    
+
         return view('content.search', compact('booksS'));
     }
 

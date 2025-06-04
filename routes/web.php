@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Middleware\AdminMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +16,12 @@ use App\Http\Controllers\Auth\RegisterController;
 */
 
 // Landing page and basic routes
-Route::get('/', function () {
-    return view('content.landing');
-})->name('landing');
+Route::get('/', [BookController::class, 'home'])->name('landing');
 
 // Authentication routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'store']);
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 });
@@ -53,7 +52,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin routes
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/home-admin', [BookController::class, 'homeAdmin'])->name('home-admin');
     Route::get('/latest-admin', [BookController::class, 'latestAdmin'])->name('latest-admin');
     Route::get('/recently-admin', [BookController::class, 'recentAdmin'])->name('recently-admin');

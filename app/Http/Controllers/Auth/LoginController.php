@@ -55,7 +55,7 @@ class LoginController extends Controller
 
             $user = Auth::user();
             if ($user->is_admin == 1) { // Menggunakan $user->is_admin setelah berhasil login
-                return redirect()->intended(route('admin.dashboard')); // Menggunakan nama rute admin
+                return redirect()->intended(route('home-admin')); // Menggunakan nama rute admin
             } else {
                 return redirect()->intended(route('home')); // Menggunakan nama rute home
             }
