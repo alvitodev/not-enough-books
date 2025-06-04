@@ -7,19 +7,22 @@
 
 <div class="mb-0 ">
   <div class="flex flex-wrap gap-6 ml-15">
-    @for ($i = 0; $i < 16; $i++)
+    @foreach ($categoriesA as $category)
       <div class="card bg-transparent w-55 rounded-xl shadow-sm relative overflow-hidden">
         <figure href="#" class="rounded-xl overflow-hidden">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="Shoes"
+            src="/images/bg-primary.png"
+            alt="{{ $category->category }}"
             class="rounded-xl" />
         </figure>
        <div class="absolute bottom-4 left-4 z-10">
-        <a href="#" class="text-2xl font-bold text-white px-3 py-2 hover:text-base-300 rounded">Category</a>
+        <a href="{{ route('category.show-admin', ['category' => $category->category]) }}"
+            class="text-2xl font-bold text-white px-3 py-2 hover:text-base-300 rounded">
+            {{ $category->category }}
+          </a>
+        </div>
       </div>
-      </div>
-    @endfor
+    @endforeach
   </div>
 </div>
 @endsection

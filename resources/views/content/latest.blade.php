@@ -26,33 +26,59 @@
 <div class="mb-0 ">
   <div class="flex flex-wrap gap-6 w-full">
     <div class="flex flex-wrap gap-6 justify-start w-full">
-    @for ($i = 0; $i < 4; $i++)
-<div class="indicator">
-  <span class="indicator-item indicator-start badge badge-white text-neutral mt-7 ml-14 rounded-md">i</span>
-    <div class="card card-side w-270 h-40 bg-transparent">
-  <div class="card card-side w-200 h-40 bg-transparent backdrop-blur-md ml-14 shadow-sm">
-        <figure class="flex-shrink-0 w-1/6">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-            alt="Movie"
-            class="w-full h-full object-cover rounded-xl" />
-        </figure>
-        <div class="card-body px-6 py-4">
-          <div class="flex flex-col space-y-1">
-          <a href="#" class="card-title text-lg text-white font-medium hover:text-base-300"> Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</a>
-          <a href="#" class="text-white text-xs hover:text-base-300">Author123</a>
-          <a class="text-primary text-[10px]">2 minutes ago</a>
+    @foreach ($latestUpdatedBooks  as $book)
+    <div class="indicator">
+      <span class="indicator-item indicator-start badge badge-white text-neutral mt-7 ml-14 rounded-md">i</span>
+        <div class="card card-side w-270 h-40 bg-transparent">
+          <div class="card card-side w-200 h-40 bg-transparent backdrop-blur-md ml-14 shadow-sm">
+            <figure class="flex-shrink-0 w-1/6">
+              <img
+                src="{{ $book->cover_img ?? '/images/default-cover.jpg' }}"
+                alt="Movie"
+                class="w-full h-full object-cover rounded-xl" />
+            </figure>
+            <div class="card-body px-6 py-4">
+              <div class="flex flex-col space-y-1">
+              <a href="{{ route('books.show', $book->id) }}" class="card-title text-lg text-white font-medium hover:text-base-300">{{ $book->title }}</a>
+              <a href="#" class="text-white text-xs hover:text-base-300">{{ $book->author }}</a>
+              <a class="text-primary text-[10px]">{{ $book->year }}</a>
+              </div>
+            <div class="card-actions justify-start mt-1">
+              <button class="btn btn-xs btn-neutral text-white">{{ $book->category }}</button>
+              <a href="{{ route('books.show', $book->id) }}" class="btn btn-xs btn-success text-white">read</a>
+              <form action="{{ route('library.add', $book->id) }}" method="POST">
+              @csrf
+              <button class="btn btn-xs btn-warning text-white">Add Library</button>
+              </form>
+            </div>
           </div>
-          <div class="card-actions justify-start mt-1">
-            <button class="btn btn-xs btn-neutral text-white">Category</button>
-            <button class="btn btn-xs btn-success text-white">read</button>
-            <button class="btn btn-xs btn-warning text-white">Add Library</button>
-          </div>
-        </div>
         </div>
       </div>
     </div>
-    @endfor
+    @endforeach
+    <div class="fixed bottom-8 left-[56%] -translate-x-1/2 z-50">
+      <div class="join shadow-lg rounded-xl bg-white/80 backdrop-blur-md px-4 py-2 space-x-1">
+
+        @if ($latestUpdatedBooks->onFirstPage())
+            <span class="join-item btn btn-xs rounded-md opacity-50 cursor-not-allowed">Prev</span>
+        @else
+            <a href="{{ $latestUpdatedBooks->previousPageUrl() }}" class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white">Prev</a>
+        @endif
+
+        @for ($i = 1; $i <= $latestUpdatedBooks->lastPage(); $i++)
+            <a href="{{ $latestUpdatedBooks->url($i) }}"
+              class="join-item btn btn-xs rounded-md {{ $latestUpdatedBooks->currentPage() == $i ? 'bg-green-500 text-white' : '' }}">
+                {{ $i }}
+            </a>
+        @endfor
+
+        @if ($latestUpdatedBooks->hasMorePages())
+            <a href="{{ $latestUpdatedBooks->nextPageUrl() }}" class="join-item btn btn-xs rounded-md hover:bg-green-500 hover:text-white">Next</a>
+        @else
+            <span class="join-item btn btn-xs rounded-md opacity-50 cursor-not-allowed">Next</span>
+        @endif
+      </div>
+    </div>
 </div>
   </div>
 </div>
