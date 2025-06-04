@@ -31,7 +31,7 @@ class Category extends Model
      */
     public function books()
     {
-        return $this->hasMany(Books::class); // Diubah dari Book::class menjadi Books::class
+        return $this->hasMany(Book::class); // Diubah dari Book::class menjadi Books::class
     }
 
     /**
